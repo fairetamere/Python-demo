@@ -1,0 +1,1161 @@
+2020-11-22 11:29:34.912 | INFO     | __main__:run:65 - starting proxypool...
+2020-11-22 11:29:34.927 | INFO     | __main__:run:68 - starting tester, pid None...
+2020-11-22 11:29:34.927 | INFO     | __main__:run:73 - starting getter, pidNone...
+2020-11-22 11:29:34.927 | INFO     | __main__:run:78 - starting server, pidNone...
+2020-11-22 11:29:35.645 | DEBUG    | __mp_main__:run_getter:48 - getter loop 0 start...
+2020-11-22 11:29:35.661 | DEBUG    | __mp_main__:run_tester:32 - tester loop 0 start...
+2020-11-22 11:29:35.661 | INFO     | processors.tester:run:73 - stating tester...
+2020-11-22 11:29:36.659 | ERROR    | __mp_main__:run_getter:49 - An error has been caught in function 'run_getter', process 'Process-2' (7104), thread 'MainThread' (7108):
+Traceback (most recent call last):
+
+  File "C:\Users\Administrator\AppData\Roaming\Python\Python36\site-packages\redis\connection.py", line 559, in connect
+    sock = self._connect()
+           │    └ <function Connection._connect at 0x00000000038788C8>
+           └ Connection<host=127.0.0.1,port=6379,db=0>
+  File "C:\Users\Administrator\AppData\Roaming\Python\Python36\site-packages\redis\connection.py", line 615, in _connect
+    raise err
+          └ ConnectionRefusedError(10061, '由于目标计算机积极拒绝，无法连接。', None, 10061, None)
+  File "C:\Users\Administrator\AppData\Roaming\Python\Python36\site-packages\redis\connection.py", line 603, in _connect
+    sock.connect(socket_address)
+    │    │       └ ('127.0.0.1', 6379)
+    │    └ <method 'connect' of '_socket.socket' objects>
+    └ <socket.socket [closed] fd=-1, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0>
+
+ConnectionRefusedError: [WinError 10061] 由于目标计算机积极拒绝，无法连接。
+
+
+During handling of the above exception, another exception occurred:
+
+
+Traceback (most recent call last):
+
+  File "<string>", line 1, in <module>
+
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python36\lib\multiprocessing\spawn.py", line 105, in spawn_main
+    exitcode = _main(fd)
+               │     └ 3
+               └ <function _main at 0x0000000002B8A158>
+
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python36\lib\multiprocessing\spawn.py", line 118, in _main
+    return self._bootstrap()
+           │    └ <function BaseProcess._bootstrap at 0x000000000290C0D0>
+           └ <Process(Process-2, started)>
+
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python36\lib\multiprocessing\process.py", line 258, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x0000000002904840>
+    └ <Process(Process-2, started)>
+
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python36\lib\multiprocessing\process.py", line 93, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Process(Process-2, started)>
+    │    │        │    └ ()
+    │    │        └ <Process(Process-2, started)>
+    │    └ <bound method Scheduler.run_getter of <__mp_main__.Scheduler object at 0x00000000048CCDA0>>
+    └ <Process(Process-2, started)>
+
+> File "C:\Users\Administrator\PycharmProjects\untitled3\redis代理池\proxypool\scheduler.py", line 49, in run_getter
+    getter.run()
+    │      └ <function Getter.run at 0x00000000048AD158>
+    └ <processors.getter.Getter object at 0x00000000028FABE0>
+
+  File "C:\Users\Administrator\PycharmProjects\untitled3\redis代理池\proxypool\processors\getter.py", line 33, in run
+    if self.is_full():
+       │    └ <function Getter.is_full at 0x0000000003BD31E0>
+       └ <processors.getter.Getter object at 0x00000000028FABE0>
+
+  File "C:\Users\Administrator\PycharmProjects\untitled3\redis代理池\proxypool\processors\getter.py", line 25, in is_full
+    return self.redis.count() >= PROXY_NUMBER_MAX
+           │    │     │          └ 50000
+           │    │     └ <function RedisClient.count at 0x0000000003B22A60>
+           │    └ <storages.Redis.RedisClient object at 0x0000000002BCA0B8>
+           └ <processors.getter.Getter object at 0x00000000028FABE0>
+
+  File "C:\Users\Administrator\PycharmProjects\untitled3\redis代理池\proxypool\storages\Redis.py", line 103, in count
+    return self.db.zcard(REDIS_KEY)#查询ip数量
+           │    │  │     └ 'proxies:universal'
+           │    │  └ <function Redis.zcard at 0x00000000038981E0>
+           │    └ Redis<ConnectionPool<Connection<host=127.0.0.1,port=6379,db=0>>>
+           └ <storages.Redis.RedisClient object at 0x0000000002BCA0B8>
+
+  File "C:\Users\Administrator\AppData\Roaming\Python\Python36\site-packages\redis\client.py", line 2692, in zcard
+    return self.execute_command('ZCARD', name)
+           │    │                        └ 'proxies:universal'
+           │    └ <function Redis.execute_command at 0x0000000003892510>
+           └ Redis<ConnectionPool<Connection<host=127.0.0.1,port=6379,db=0>>>
+  File "C:\Users\Administrator\AppData\Roaming\Python\Python36\site-packages\redis\client.py", line 898, in execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+           │    │             │    │              │               └ {}
+           │    │             │    │              └ 'ZCARD'
+           │    │             │    └ <function ConnectionPool.get_connection at 0x0000000003879598>
+           │    │             └ ConnectionPool<Connection<host=127.0.0.1,port=6379,db=0>>
+           │    └ None
+           └ Redis<ConnectionPool<Connection<host=127.0.0.1,port=6379,db=0>>>
+  File "C:\Users\Administrator\AppData\Roaming\Python\Python36\site-packages\redis\connection.py", line 1192, in get_connection
+    connection.connect()
+    │          └ <function Connection.connect at 0x0000000003878840>
+    └ Connection<host=127.0.0.1,port=6379,db=0>
+  File "C:\Users\Administrator\AppData\Roaming\Python\Python36\site-packages\redis\connection.py", line 563, in connect
+    raise ConnectionError(self._error_message(e))
+          │               │    └ <function Connection._error_message at 0x0000000003878950>
+          │               └ Connection<host=127.0.0.1,port=6379,db=0>
+          └ <class 'redis.exceptions.ConnectionError'>
+
+redis.exceptions.ConnectionError: Error 10061 connecting to 127.0.0.1:6379. 由于目标计算机积极拒绝，无法连接。.
+2020-11-22 11:29:36.690 | ERROR    | __mp_main__:run_tester:33 - An error has been caught in function 'run_tester', process 'Process-1' (7068), thread 'MainThread' (7072):
+Traceback (most recent call last):
+
+  File "C:\Users\Administrator\AppData\Roaming\Python\Python36\site-packages\redis\connection.py", line 559, in connect
+    sock = self._connect()
+           │    └ <function Connection._connect at 0x00000000038788C8>
+           └ Connection<host=127.0.0.1,port=6379,db=0>
+  File "C:\Users\Administrator\AppData\Roaming\Python\Python36\site-packages\redis\connection.py", line 615, in _connect
+    raise err
+          └ ConnectionRefusedError(10061, '由于目标计算机积极拒绝，无法连接。', None, 10061, None)
+  File "C:\Users\Administrator\AppData\Roaming\Python\Python36\site-packages\redis\connection.py", line 603, in _connect
+    sock.connect(socket_address)
+    │    │       └ ('127.0.0.1', 6379)
+    │    └ <method 'connect' of '_socket.socket' objects>
+    └ <socket.socket [closed] fd=-1, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=0>
+
+ConnectionRefusedError: [WinError 10061] 由于目标计算机积极拒绝，无法连接。
+
+
+During handling of the above exception, another exception occurred:
+
+
+Traceback (most recent call last):
+
+  File "<string>", line 1, in <module>
+
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python36\lib\multiprocessing\spawn.py", line 105, in spawn_main
+    exitcode = _main(fd)
+               │     └ 3
+               └ <function _main at 0x0000000002B4A158>
+
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python36\lib\multiprocessing\spawn.py", line 118, in _main
+    return self._bootstrap()
+           │    └ <function BaseProcess._bootstrap at 0x00000000028CC0D0>
+           └ <Process(Process-1, started)>
+
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python36\lib\multiprocessing\process.py", line 258, in _bootstrap
+    self.run()
+    │    └ <function BaseProcess.run at 0x00000000028C4840>
+    └ <Process(Process-1, started)>
+
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python36\lib\multiprocessing\process.py", line 93, in run
+    self._target(*self._args, **self._kwargs)
+    │    │        │    │        │    └ {}
+    │    │        │    │        └ <Process(Process-1, started)>
+    │    │        │    └ ()
+    │    │        └ <Process(Process-1, started)>
+    │    └ <bound method Scheduler.run_tester of <__mp_main__.Scheduler object at 0x00000000048CBDA0>>
+    └ <Process(Process-1, started)>
+
+> File "C:\Users\Administrator\PycharmProjects\untitled3\redis代理池\proxypool\scheduler.py", line 33, in run_tester
+    tester.run()
+    │      └ <function Tester.run at 0x0000000004AF10D0>
+    └ <processors.tester.Tester object at 0x00000000028BAC18>
+
+  File "C:\Users\Administrator\PycharmProjects\untitled3\redis代理池\proxypool\processors\tester.py", line 74, in run
+    count = self.redis.count()
+            │    │     └ <function RedisClient.count at 0x0000000003BD2A60>
+            │    └ <storages.Redis.RedisClient object at 0x0000000002B8A080>
+            └ <processors.tester.Tester object at 0x00000000028BAC18>
+
+  File "C:\Users\Administrator\PycharmProjects\untitled3\redis代理池\proxypool\storages\Redis.py", line 103, in count
+    return self.db.zcard(REDIS_KEY)#查询ip数量
+           │    │  │     └ 'proxies:universal'
+           │    │  └ <function Redis.zcard at 0x00000000038981E0>
+           │    └ Redis<ConnectionPool<Connection<host=127.0.0.1,port=6379,db=0>>>
+           └ <storages.Redis.RedisClient object at 0x0000000002B8A080>
+
+  File "C:\Users\Administrator\AppData\Roaming\Python\Python36\site-packages\redis\client.py", line 2692, in zcard
+    return self.execute_command('ZCARD', name)
+           │    │                        └ 'proxies:universal'
+           │    └ <function Redis.execute_command at 0x0000000003892510>
+           └ Redis<ConnectionPool<Connection<host=127.0.0.1,port=6379,db=0>>>
+  File "C:\Users\Administrator\AppData\Roaming\Python\Python36\site-packages\redis\client.py", line 898, in execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+           │    │             │    │              │               └ {}
+           │    │             │    │              └ 'ZCARD'
+           │    │             │    └ <function ConnectionPool.get_connection at 0x0000000003879598>
+           │    │             └ ConnectionPool<Connection<host=127.0.0.1,port=6379,db=0>>
+           │    └ None
+           └ Redis<ConnectionPool<Connection<host=127.0.0.1,port=6379,db=0>>>
+  File "C:\Users\Administrator\AppData\Roaming\Python\Python36\site-packages\redis\connection.py", line 1192, in get_connection
+    connection.connect()
+    │          └ <function Connection.connect at 0x0000000003878840>
+    └ Connection<host=127.0.0.1,port=6379,db=0>
+  File "C:\Users\Administrator\AppData\Roaming\Python\Python36\site-packages\redis\connection.py", line 563, in connect
+    raise ConnectionError(self._error_message(e))
+          │               │    └ <function Connection._error_message at 0x0000000003878950>
+          │               └ Connection<host=127.0.0.1,port=6379,db=0>
+          └ <class 'redis.exceptions.ConnectionError'>
+
+redis.exceptions.ConnectionError: Error 10061 connecting to 127.0.0.1:6379. 由于目标计算机积极拒绝，无法连接。.
+2020-11-22 11:32:28.330 | INFO     | __main__:run:65 - starting proxypool...
+2020-11-22 11:32:28.330 | INFO     | __main__:run:68 - starting tester, pid None...
+2020-11-22 11:32:28.330 | INFO     | __main__:run:73 - starting getter, pidNone...
+2020-11-22 11:32:28.330 | INFO     | __main__:run:78 - starting server, pidNone...
+2020-11-22 11:32:29.032 | DEBUG    | __mp_main__:run_getter:48 - getter loop 0 start...
+2020-11-22 11:32:29.032 | DEBUG    | __mp_main__:run_tester:32 - tester loop 0 start...
+2020-11-22 11:32:29.032 | INFO     | processors.tester:run:73 - stating tester...
+2020-11-22 11:32:29.032 | INFO     | processors.getter:run:36 - crawler Daili66Crawler to get proxy
+2020-11-22 11:32:29.032 | INFO     | base:crawl:27 - fetching http://www.66ip.cn/1.html
+2020-11-22 11:32:29.032 | DEBUG    | processors.tester:run:75 - 8564 proxies to test
+2020-11-22 11:32:29.032 | DEBUG    | processors.tester:run:78 - testing proxies use cursor 0, count 20
+2020-11-22 11:32:29.032 | DEBUG    | processors.tester:test:41 - testing 182.34.34.136:9999
+2020-11-22 11:32:29.281 | DEBUG    | processors.tester:test:41 - testing 222.189.190.116:8804
+2020-11-22 11:32:29.281 | DEBUG    | processors.tester:test:41 - testing 49.89.103.241:8206
+2020-11-22 11:32:29.281 | DEBUG    | processors.tester:test:41 - testing 117.240.28.81:8080
+2020-11-22 11:32:29.281 | DEBUG    | processors.tester:test:41 - testing 49.86.26.24:8576
+2020-11-22 11:32:29.281 | DEBUG    | processors.tester:test:41 - testing 1.174.139.191:8845
+2020-11-22 11:32:29.281 | DEBUG    | processors.tester:test:41 - testing 121.233.226.161:9999
+2020-11-22 11:32:29.281 | DEBUG    | processors.tester:test:41 - testing 114.99.9.76:8314
+2020-11-22 11:32:29.281 | DEBUG    | processors.tester:test:41 - testing 179.14.147.162:8083
+2020-11-22 11:32:29.281 | DEBUG    | processors.tester:test:41 - testing 1.198.72.71:8472
+2020-11-22 11:32:29.281 | DEBUG    | processors.tester:test:41 - testing 39.84.116.148:9999
+2020-11-22 11:32:29.281 | DEBUG    | processors.tester:test:41 - testing 60.167.159.217:8225
+2020-11-22 11:32:29.281 | DEBUG    | processors.tester:test:41 - testing 60.191.11.251:3128
+2020-11-22 11:32:29.281 | DEBUG    | processors.tester:test:41 - testing 1.0.179.255:8080
+2020-11-22 11:32:29.281 | DEBUG    | processors.tester:test:41 - testing 123.149.137.195:8453
+2020-11-22 11:32:29.281 | DEBUG    | processors.tester:test:41 - testing 36.248.129.23:8830
+2020-11-22 11:32:29.281 | DEBUG    | processors.tester:test:41 - testing 103.53.0.35:80
+2020-11-22 11:32:29.281 | DEBUG    | processors.tester:test:41 - testing 121.226.214.110:8299
+2020-11-22 11:32:29.281 | DEBUG    | processors.tester:test:41 - testing 123.101.207.140:9999
+2020-11-22 11:32:29.281 | DEBUG    | processors.tester:test:41 - testing 60.167.159.217:8191
+2020-11-22 11:32:29.281 | DEBUG    | processors.tester:test:41 - testing 202.152.51.44:8080
+2020-11-22 11:32:29.281 | INFO     | base:crawl:27 - fetching http://www.66ip.cn/2.html
+2020-11-22 11:32:30.015 | INFO     | base:crawl:27 - fetching http://www.66ip.cn/3.html
+2020-11-22 11:32:30.202 | INFO     | base:crawl:27 - fetching http://www.66ip.cn/4.html
+2020-11-22 11:32:30.405 | INFO     | base:crawl:27 - fetching http://www.66ip.cn/5.html
+2020-11-22 11:32:30.529 | INFO     | storages.Redis:decrease:73 - 60.191.11.251:3128 score decrease 1, current 9.0
+2020-11-22 11:32:30.529 | DEBUG    | processors.tester:test:64 - proxy 60.191.11.251:3128 is invalid, decrease score
+2020-11-22 11:32:30.623 | INFO     | processors.getter:run:36 - crawler Data5UCrawler to get proxy
+2020-11-22 11:32:30.623 | INFO     | base:crawl:27 - fetching http://www.data5u.com
+2020-11-22 11:32:30.888 | INFO     | base:crawl:30 - fetched proxy 27.206.180.12:8338 from http://www.data5u.com
+2020-11-22 11:32:30.888 | INFO     | processors.getter:run:39 - Data5UCrawler:27.206.180.12:8338 already added
+2020-11-22 11:32:30.888 | INFO     | base:crawl:30 - fetched proxy 115.221.246.188:8510 from http://www.data5u.com
+2020-11-22 11:32:30.888 | INFO     | processors.getter:run:39 - Data5UCrawler:115.221.246.188:8510 already added
+2020-11-22 11:32:30.888 | INFO     | base:crawl:30 - fetched proxy 120.78.179.136:8532 from http://www.data5u.com
+2020-11-22 11:32:30.888 | INFO     | processors.getter:run:39 - Data5UCrawler:120.78.179.136:8532 already added
+2020-11-22 11:32:30.888 | INFO     | base:crawl:30 - fetched proxy 49.89.103.147:9054 from http://www.data5u.com
+2020-11-22 11:32:30.888 | INFO     | processors.getter:run:39 - Data5UCrawler:49.89.103.147:9054 already added
+2020-11-22 11:32:30.888 | INFO     | base:crawl:30 - fetched proxy 49.70.89.179:8589 from http://www.data5u.com
+2020-11-22 11:32:30.888 | INFO     | processors.getter:run:39 - Data5UCrawler:49.70.89.179:8589 already added
+2020-11-22 11:32:30.888 | INFO     | base:crawl:30 - fetched proxy 223.150.11.158:8774 from http://www.data5u.com
+2020-11-22 11:32:30.888 | INFO     | processors.getter:run:39 - Data5UCrawler:223.150.11.158:8774 already added
+2020-11-22 11:32:30.888 | INFO     | base:crawl:30 - fetched proxy 115.218.6.66:8759 from http://www.data5u.com
+2020-11-22 11:32:30.888 | INFO     | processors.getter:run:39 - Data5UCrawler:115.218.6.66:8759 already added
+2020-11-22 11:32:30.888 | INFO     | base:crawl:30 - fetched proxy 58.220.95.30:8704 from http://www.data5u.com
+2020-11-22 11:32:30.904 | INFO     | processors.getter:run:39 - Data5UCrawler:58.220.95.30:8704 already added
+2020-11-22 11:32:30.904 | INFO     | base:crawl:30 - fetched proxy 123.163.117.57:8197 from http://www.data5u.com
+2020-11-22 11:32:30.904 | INFO     | processors.getter:run:39 - Data5UCrawler:123.163.117.57:8197 already added
+2020-11-22 11:32:30.904 | INFO     | base:crawl:30 - fetched proxy 121.226.215.27:8907 from http://www.data5u.com
+2020-11-22 11:32:30.904 | INFO     | processors.getter:run:39 - Data5UCrawler:121.226.215.27:8907 already added
+2020-11-22 11:32:30.904 | INFO     | base:crawl:30 - fetched proxy 123.160.1.228:8999 from http://www.data5u.com
+2020-11-22 11:32:30.904 | INFO     | processors.getter:run:39 - Data5UCrawler:123.160.1.228:8999 already added
+2020-11-22 11:32:30.904 | INFO     | base:crawl:30 - fetched proxy 123.55.102.220:8605 from http://www.data5u.com
+2020-11-22 11:32:30.904 | INFO     | processors.getter:run:39 - Data5UCrawler:123.55.102.220:8605 already added
+2020-11-22 11:32:30.904 | INFO     | base:crawl:30 - fetched proxy 222.94.196.138:8913 from http://www.data5u.com
+2020-11-22 11:32:30.904 | INFO     | processors.getter:run:39 - Data5UCrawler:222.94.196.138:8913 already added
+2020-11-22 11:32:30.904 | INFO     | base:crawl:30 - fetched proxy 123.149.137.232:8638 from http://www.data5u.com
+2020-11-22 11:32:30.904 | INFO     | processors.getter:run:39 - Data5UCrawler:123.149.137.232:8638 already added
+2020-11-22 11:32:30.904 | INFO     | base:crawl:30 - fetched proxy 175.43.56.24:9051 from http://www.data5u.com
+2020-11-22 11:32:30.904 | INFO     | processors.getter:run:39 - Data5UCrawler:175.43.56.24:9051 already added
+2020-11-22 11:32:30.904 | INFO     | base:crawl:30 - fetched proxy 123.163.117.62:8960 from http://www.data5u.com
+2020-11-22 11:32:30.904 | INFO     | processors.getter:run:39 - Data5UCrawler:123.163.117.62:8960 already added
+2020-11-22 11:32:30.904 | INFO     | base:crawl:30 - fetched proxy 175.44.109.211:8258 from http://www.data5u.com
+2020-11-22 11:32:30.904 | INFO     | processors.getter:run:39 - Data5UCrawler:175.44.109.211:8258 already added
+2020-11-22 11:32:30.904 | INFO     | base:crawl:30 - fetched proxy 27.214.48.225:8935 from http://www.data5u.com
+2020-11-22 11:32:30.904 | INFO     | processors.getter:run:39 - Data5UCrawler:27.214.48.225:8935 already added
+2020-11-22 11:32:30.904 | INFO     | base:crawl:30 - fetched proxy 49.89.67.99:8725 from http://www.data5u.com
+2020-11-22 11:32:30.904 | INFO     | processors.getter:run:39 - Data5UCrawler:49.89.67.99:8725 already added
+2020-11-22 11:32:30.904 | INFO     | base:crawl:30 - fetched proxy 27.220.51.78:8472 from http://www.data5u.com
+2020-11-22 11:32:30.904 | INFO     | processors.getter:run:39 - Data5UCrawler:27.220.51.78:8472 already added
+2020-11-22 11:32:30.919 | INFO     | processors.getter:run:36 - crawler IP3366Crawler to get proxy
+2020-11-22 11:32:30.919 | INFO     | base:crawl:27 - fetching http://www.ip3366.net/free/?stype=1&page=1
+2020-11-22 11:32:31.294 | INFO     | base:crawl:30 - fetched proxy 49.87.202.54:9999 from http://www.ip3366.net/free/?stype=1&page=1
+2020-11-22 11:32:31.294 | INFO     | processors.getter:run:39 - IP3366Crawler:49.87.202.54:9999 already added
+2020-11-22 11:32:31.294 | INFO     | base:crawl:30 - fetched proxy 49.89.84.145:9999 from http://www.ip3366.net/free/?stype=1&page=1
+2020-11-22 11:32:31.294 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.84.145:9999 already added
+2020-11-22 11:32:31.294 | INFO     | base:crawl:30 - fetched proxy 49.89.84.64:9999 from http://www.ip3366.net/free/?stype=1&page=1
+2020-11-22 11:32:31.294 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.84.64:9999 already added
+2020-11-22 11:32:31.294 | INFO     | base:crawl:30 - fetched proxy 59.62.28.175:9000 from http://www.ip3366.net/free/?stype=1&page=1
+2020-11-22 11:32:31.294 | INFO     | processors.getter:run:39 - IP3366Crawler:59.62.28.175:9000 already added
+2020-11-22 11:32:31.294 | INFO     | base:crawl:30 - fetched proxy 49.89.86.116:9999 from http://www.ip3366.net/free/?stype=1&page=1
+2020-11-22 11:32:31.294 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.86.116:9999 already added
+2020-11-22 11:32:31.294 | INFO     | base:crawl:30 - fetched proxy 60.186.43.152:9000 from http://www.ip3366.net/free/?stype=1&page=1
+2020-11-22 11:32:31.294 | INFO     | processors.getter:run:39 - IP3366Crawler:60.186.43.152:9000 already added
+2020-11-22 11:32:31.294 | INFO     | base:crawl:30 - fetched proxy 49.89.67.82:9999 from http://www.ip3366.net/free/?stype=1&page=1
+2020-11-22 11:32:31.294 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.67.82:9999 already added
+2020-11-22 11:32:31.294 | INFO     | base:crawl:30 - fetched proxy 49.70.99.162:9999 from http://www.ip3366.net/free/?stype=1&page=1
+2020-11-22 11:32:31.294 | INFO     | processors.getter:run:39 - IP3366Crawler:49.70.99.162:9999 already added
+2020-11-22 11:32:31.294 | INFO     | base:crawl:30 - fetched proxy 60.210.136.47:9000 from http://www.ip3366.net/free/?stype=1&page=1
+2020-11-22 11:32:31.294 | INFO     | processors.getter:run:39 - IP3366Crawler:60.210.136.47:9000 already added
+2020-11-22 11:32:31.294 | INFO     | base:crawl:30 - fetched proxy 49.86.183.77:9999 from http://www.ip3366.net/free/?stype=1&page=1
+2020-11-22 11:32:31.294 | INFO     | processors.getter:run:39 - IP3366Crawler:49.86.183.77:9999 already added
+2020-11-22 11:32:31.294 | INFO     | base:crawl:30 - fetched proxy 49.89.84.240:9999 from http://www.ip3366.net/free/?stype=1&page=1
+2020-11-22 11:32:31.294 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.84.240:9999 already added
+2020-11-22 11:32:31.294 | INFO     | base:crawl:30 - fetched proxy 60.182.166.95:9999 from http://www.ip3366.net/free/?stype=1&page=1
+2020-11-22 11:32:31.294 | INFO     | processors.getter:run:39 - IP3366Crawler:60.182.166.95:9999 already added
+2020-11-22 11:32:31.309 | INFO     | base:crawl:30 - fetched proxy 49.70.95.226:9999 from http://www.ip3366.net/free/?stype=1&page=1
+2020-11-22 11:32:31.309 | INFO     | processors.getter:run:39 - IP3366Crawler:49.70.95.226:9999 already added
+2020-11-22 11:32:31.309 | INFO     | base:crawl:30 - fetched proxy 49.86.24.185:9999 from http://www.ip3366.net/free/?stype=1&page=1
+2020-11-22 11:32:31.309 | INFO     | processors.getter:run:39 - IP3366Crawler:49.86.24.185:9999 already added
+2020-11-22 11:32:31.309 | INFO     | base:crawl:30 - fetched proxy 49.89.85.213:9999 from http://www.ip3366.net/free/?stype=1&page=1
+2020-11-22 11:32:31.309 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.85.213:9999 already added
+2020-11-22 11:32:31.309 | INFO     | base:crawl:27 - fetching http://www.ip3366.net/free/?stype=1&page=2
+2020-11-22 11:32:31.621 | INFO     | storages.Redis:decrease:73 - 121.233.226.161:9999 score decrease 1, current 9.0
+2020-11-22 11:32:31.621 | DEBUG    | processors.tester:test:64 - proxy 121.233.226.161:9999 is invalid, decrease score
+2020-11-22 11:32:31.653 | INFO     | storages.Redis:decrease:73 - 182.34.34.136:9999 score decrease 1, current 9.0
+2020-11-22 11:32:31.653 | DEBUG    | processors.tester:test:64 - proxy 182.34.34.136:9999 is invalid, decrease score
+2020-11-22 11:32:31.668 | INFO     | storages.Redis:decrease:73 - 121.226.214.110:8299 score decrease 1, current 9.0
+2020-11-22 11:32:31.668 | DEBUG    | processors.tester:test:64 - proxy 121.226.214.110:8299 is invalid, decrease score
+2020-11-22 11:32:31.668 | INFO     | base:crawl:30 - fetched proxy 49.89.67.12:9999 from http://www.ip3366.net/free/?stype=1&page=2
+2020-11-22 11:32:31.668 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.67.12:9999 already added
+2020-11-22 11:32:31.668 | INFO     | base:crawl:30 - fetched proxy 49.86.59.37:9999 from http://www.ip3366.net/free/?stype=1&page=2
+2020-11-22 11:32:31.668 | INFO     | processors.getter:run:39 - IP3366Crawler:49.86.59.37:9999 already added
+2020-11-22 11:32:31.668 | INFO     | base:crawl:30 - fetched proxy 49.70.99.9:9999 from http://www.ip3366.net/free/?stype=1&page=2
+2020-11-22 11:32:31.668 | INFO     | processors.getter:run:39 - IP3366Crawler:49.70.99.9:9999 already added
+2020-11-22 11:32:31.668 | INFO     | base:crawl:30 - fetched proxy 49.70.95.67:9999 from http://www.ip3366.net/free/?stype=1&page=2
+2020-11-22 11:32:31.668 | INFO     | processors.getter:run:39 - IP3366Crawler:49.70.95.67:9999 already added
+2020-11-22 11:32:31.668 | INFO     | base:crawl:30 - fetched proxy 49.87.246.243:9999 from http://www.ip3366.net/free/?stype=1&page=2
+2020-11-22 11:32:31.668 | INFO     | processors.getter:run:39 - IP3366Crawler:49.87.246.243:9999 already added
+2020-11-22 11:32:31.668 | INFO     | base:crawl:30 - fetched proxy 49.86.58.16:9999 from http://www.ip3366.net/free/?stype=1&page=2
+2020-11-22 11:32:31.668 | INFO     | processors.getter:run:39 - IP3366Crawler:49.86.58.16:9999 already added
+2020-11-22 11:32:31.668 | INFO     | base:crawl:30 - fetched proxy 49.86.58.16:9999 from http://www.ip3366.net/free/?stype=1&page=2
+2020-11-22 11:32:31.668 | INFO     | processors.getter:run:39 - IP3366Crawler:49.86.58.16:9999 already added
+2020-11-22 11:32:31.668 | INFO     | base:crawl:30 - fetched proxy 49.86.56.118:9999 from http://www.ip3366.net/free/?stype=1&page=2
+2020-11-22 11:32:31.684 | INFO     | processors.getter:run:39 - IP3366Crawler:49.86.56.118:9999 already added
+2020-11-22 11:32:31.684 | INFO     | base:crawl:30 - fetched proxy 49.70.99.205:9999 from http://www.ip3366.net/free/?stype=1&page=2
+2020-11-22 11:32:31.684 | INFO     | processors.getter:run:39 - IP3366Crawler:49.70.99.205:9999 already added
+2020-11-22 11:32:31.684 | INFO     | base:crawl:30 - fetched proxy 49.89.84.214:9999 from http://www.ip3366.net/free/?stype=1&page=2
+2020-11-22 11:32:31.684 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.84.214:9999 already added
+2020-11-22 11:32:31.684 | INFO     | base:crawl:30 - fetched proxy 49.89.85.245:9999 from http://www.ip3366.net/free/?stype=1&page=2
+2020-11-22 11:32:31.684 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.85.245:9999 already added
+2020-11-22 11:32:31.684 | INFO     | base:crawl:30 - fetched proxy 49.89.103.41:9999 from http://www.ip3366.net/free/?stype=1&page=2
+2020-11-22 11:32:31.684 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.103.41:9999 already added
+2020-11-22 11:32:31.684 | INFO     | base:crawl:30 - fetched proxy 49.89.87.33:9999 from http://www.ip3366.net/free/?stype=1&page=2
+2020-11-22 11:32:31.684 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.87.33:9999 already added
+2020-11-22 11:32:31.684 | INFO     | base:crawl:30 - fetched proxy 49.89.85.200:9999 from http://www.ip3366.net/free/?stype=1&page=2
+2020-11-22 11:32:31.684 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.85.200:9999 already added
+2020-11-22 11:32:31.684 | INFO     | base:crawl:30 - fetched proxy 49.89.103.45:9999 from http://www.ip3366.net/free/?stype=1&page=2
+2020-11-22 11:32:31.684 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.103.45:9999 already added
+2020-11-22 11:32:31.684 | INFO     | base:crawl:27 - fetching http://www.ip3366.net/free/?stype=1&page=3
+2020-11-22 11:32:31.684 | INFO     | storages.Redis:decrease:73 - 123.149.137.195:8453 score decrease 1, current 9.0
+2020-11-22 11:32:31.684 | DEBUG    | processors.tester:test:64 - proxy 123.149.137.195:8453 is invalid, decrease score
+2020-11-22 11:32:32.058 | INFO     | base:crawl:30 - fetched proxy 49.89.85.172:9999 from http://www.ip3366.net/free/?stype=1&page=3
+2020-11-22 11:32:32.058 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.85.172:9999 already added
+2020-11-22 11:32:32.058 | INFO     | base:crawl:30 - fetched proxy 49.89.84.135:9999 from http://www.ip3366.net/free/?stype=1&page=3
+2020-11-22 11:32:32.058 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.84.135:9999 already added
+2020-11-22 11:32:32.058 | INFO     | base:crawl:30 - fetched proxy 60.167.112.121:1133 from http://www.ip3366.net/free/?stype=1&page=3
+2020-11-22 11:32:32.058 | INFO     | processors.getter:run:39 - IP3366Crawler:60.167.112.121:1133 already added
+2020-11-22 11:32:32.058 | INFO     | base:crawl:30 - fetched proxy 60.210.132.25:9000 from http://www.ip3366.net/free/?stype=1&page=3
+2020-11-22 11:32:32.058 | INFO     | processors.getter:run:39 - IP3366Crawler:60.210.132.25:9000 already added
+2020-11-22 11:32:32.058 | INFO     | base:crawl:30 - fetched proxy 60.210.133.224:9000 from http://www.ip3366.net/free/?stype=1&page=3
+2020-11-22 11:32:32.058 | INFO     | processors.getter:run:39 - IP3366Crawler:60.210.133.224:9000 already added
+2020-11-22 11:32:32.058 | INFO     | base:crawl:30 - fetched proxy 49.89.87.152:9999 from http://www.ip3366.net/free/?stype=1&page=3
+2020-11-22 11:32:32.058 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.87.152:9999 already added
+2020-11-22 11:32:32.058 | INFO     | base:crawl:30 - fetched proxy 39.81.146.58:9000 from http://www.ip3366.net/free/?stype=1&page=3
+2020-11-22 11:32:32.058 | INFO     | processors.getter:run:39 - IP3366Crawler:39.81.146.58:9000 already added
+2020-11-22 11:32:32.058 | INFO     | base:crawl:30 - fetched proxy 60.168.207.82:1133 from http://www.ip3366.net/free/?stype=1&page=3
+2020-11-22 11:32:32.058 | INFO     | processors.getter:run:39 - IP3366Crawler:60.168.207.82:1133 already added
+2020-11-22 11:32:32.058 | INFO     | base:crawl:30 - fetched proxy 27.206.74.41:9000 from http://www.ip3366.net/free/?stype=1&page=3
+2020-11-22 11:32:32.074 | INFO     | processors.getter:run:39 - IP3366Crawler:27.206.74.41:9000 already added
+2020-11-22 11:32:32.074 | INFO     | base:crawl:30 - fetched proxy 27.220.122.198:9000 from http://www.ip3366.net/free/?stype=1&page=3
+2020-11-22 11:32:32.074 | INFO     | processors.getter:run:39 - IP3366Crawler:27.220.122.198:9000 already added
+2020-11-22 11:32:32.074 | INFO     | base:crawl:30 - fetched proxy 27.220.54.57:9000 from http://www.ip3366.net/free/?stype=1&page=3
+2020-11-22 11:32:32.074 | INFO     | processors.getter:run:39 - IP3366Crawler:27.220.54.57:9000 already added
+2020-11-22 11:32:32.074 | INFO     | base:crawl:30 - fetched proxy 39.81.146.136:9000 from http://www.ip3366.net/free/?stype=1&page=3
+2020-11-22 11:32:32.074 | INFO     | processors.getter:run:39 - IP3366Crawler:39.81.146.136:9000 already added
+2020-11-22 11:32:32.074 | INFO     | base:crawl:30 - fetched proxy 27.220.50.192:9000 from http://www.ip3366.net/free/?stype=1&page=3
+2020-11-22 11:32:32.074 | INFO     | processors.getter:run:39 - IP3366Crawler:27.220.50.192:9000 already added
+2020-11-22 11:32:32.074 | INFO     | base:crawl:30 - fetched proxy 27.206.74.7:9000 from http://www.ip3366.net/free/?stype=1&page=3
+2020-11-22 11:32:32.074 | INFO     | processors.getter:run:39 - IP3366Crawler:27.206.74.7:9000 already added
+2020-11-22 11:32:32.074 | INFO     | base:crawl:30 - fetched proxy 27.220.53.230:9000 from http://www.ip3366.net/free/?stype=1&page=3
+2020-11-22 11:32:32.074 | INFO     | processors.getter:run:39 - IP3366Crawler:27.220.53.230:9000 already added
+2020-11-22 11:32:32.074 | INFO     | base:crawl:27 - fetching http://www.ip3366.net/free/?stype=1&page=4
+2020-11-22 11:32:32.417 | INFO     | storages.Redis:decrease:73 - 1.174.139.191:8845 score decrease 1, current 8.0
+2020-11-22 11:32:32.417 | DEBUG    | processors.tester:test:64 - proxy 1.174.139.191:8845 is invalid, decrease score
+2020-11-22 11:32:32.448 | INFO     | base:crawl:30 - fetched proxy 27.214.115.17:9000 from http://www.ip3366.net/free/?stype=1&page=4
+2020-11-22 11:32:32.448 | INFO     | processors.getter:run:39 - IP3366Crawler:27.214.115.17:9000 already added
+2020-11-22 11:32:32.448 | INFO     | base:crawl:30 - fetched proxy 27.220.122.51:9000 from http://www.ip3366.net/free/?stype=1&page=4
+2020-11-22 11:32:32.448 | INFO     | processors.getter:run:39 - IP3366Crawler:27.220.122.51:9000 already added
+2020-11-22 11:32:32.448 | INFO     | base:crawl:30 - fetched proxy 60.167.134.191:1133 from http://www.ip3366.net/free/?stype=1&page=4
+2020-11-22 11:32:32.448 | INFO     | processors.getter:run:39 - IP3366Crawler:60.167.134.191:1133 already added
+2020-11-22 11:32:32.448 | INFO     | base:crawl:30 - fetched proxy 27.206.78.190:9000 from http://www.ip3366.net/free/?stype=1&page=4
+2020-11-22 11:32:32.448 | INFO     | processors.getter:run:39 - IP3366Crawler:27.206.78.190:9000 already added
+2020-11-22 11:32:32.448 | INFO     | base:crawl:30 - fetched proxy 39.81.144.28:9000 from http://www.ip3366.net/free/?stype=1&page=4
+2020-11-22 11:32:32.448 | INFO     | processors.getter:run:39 - IP3366Crawler:39.81.144.28:9000 already added
+2020-11-22 11:32:32.448 | INFO     | base:crawl:30 - fetched proxy 27.220.126.175:9000 from http://www.ip3366.net/free/?stype=1&page=4
+2020-11-22 11:32:32.448 | INFO     | processors.getter:run:39 - IP3366Crawler:27.220.126.175:9000 already added
+2020-11-22 11:32:32.448 | INFO     | base:crawl:30 - fetched proxy 27.192.172.41:9000 from http://www.ip3366.net/free/?stype=1&page=4
+2020-11-22 11:32:32.448 | INFO     | processors.getter:run:39 - IP3366Crawler:27.192.172.41:9000 already added
+2020-11-22 11:32:32.448 | INFO     | base:crawl:30 - fetched proxy 27.206.76.14:9000 from http://www.ip3366.net/free/?stype=1&page=4
+2020-11-22 11:32:32.448 | INFO     | processors.getter:run:39 - IP3366Crawler:27.206.76.14:9000 already added
+2020-11-22 11:32:32.448 | INFO     | base:crawl:30 - fetched proxy 27.206.73.66:9000 from http://www.ip3366.net/free/?stype=1&page=4
+2020-11-22 11:32:32.448 | INFO     | processors.getter:run:39 - IP3366Crawler:27.206.73.66:9000 already added
+2020-11-22 11:32:32.448 | INFO     | base:crawl:30 - fetched proxy 27.192.168.190:9000 from http://www.ip3366.net/free/?stype=1&page=4
+2020-11-22 11:32:32.448 | INFO     | processors.getter:run:39 - IP3366Crawler:27.192.168.190:9000 already added
+2020-11-22 11:32:32.448 | INFO     | base:crawl:30 - fetched proxy 27.206.75.183:9000 from http://www.ip3366.net/free/?stype=1&page=4
+2020-11-22 11:32:32.448 | INFO     | processors.getter:run:39 - IP3366Crawler:27.206.75.183:9000 already added
+2020-11-22 11:32:32.448 | INFO     | base:crawl:30 - fetched proxy 27.220.165.255:9000 from http://www.ip3366.net/free/?stype=1&page=4
+2020-11-22 11:32:32.448 | INFO     | processors.getter:run:39 - IP3366Crawler:27.220.165.255:9000 already added
+2020-11-22 11:32:32.464 | INFO     | base:crawl:30 - fetched proxy 27.192.170.85:9000 from http://www.ip3366.net/free/?stype=1&page=4
+2020-11-22 11:32:32.464 | INFO     | processors.getter:run:39 - IP3366Crawler:27.192.170.85:9000 already added
+2020-11-22 11:32:32.464 | INFO     | base:crawl:30 - fetched proxy 27.220.51.217:9000 from http://www.ip3366.net/free/?stype=1&page=4
+2020-11-22 11:32:32.464 | INFO     | processors.getter:run:39 - IP3366Crawler:27.220.51.217:9000 already added
+2020-11-22 11:32:32.464 | INFO     | base:crawl:30 - fetched proxy 27.206.177.155:9000 from http://www.ip3366.net/free/?stype=1&page=4
+2020-11-22 11:32:32.464 | INFO     | processors.getter:run:39 - IP3366Crawler:27.206.177.155:9000 already added
+2020-11-22 11:32:32.464 | INFO     | base:crawl:27 - fetching http://www.ip3366.net/free/?stype=1&page=5
+2020-11-22 11:32:32.838 | INFO     | base:crawl:30 - fetched proxy 27.220.121.167:9000 from http://www.ip3366.net/free/?stype=1&page=5
+2020-11-22 11:32:32.838 | INFO     | processors.getter:run:39 - IP3366Crawler:27.220.121.167:9000 already added
+2020-11-22 11:32:32.838 | INFO     | base:crawl:30 - fetched proxy 39.81.61.65:9000 from http://www.ip3366.net/free/?stype=1&page=5
+2020-11-22 11:32:32.838 | INFO     | processors.getter:run:39 - IP3366Crawler:39.81.61.65:9000 already added
+2020-11-22 11:32:32.838 | INFO     | base:crawl:30 - fetched proxy 27.206.177.185:9000 from http://www.ip3366.net/free/?stype=1&page=5
+2020-11-22 11:32:32.838 | INFO     | processors.getter:run:39 - IP3366Crawler:27.206.177.185:9000 already added
+2020-11-22 11:32:32.838 | INFO     | base:crawl:30 - fetched proxy 49.89.84.203:9999 from http://www.ip3366.net/free/?stype=1&page=5
+2020-11-22 11:32:32.838 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.84.203:9999 already added
+2020-11-22 11:32:32.838 | INFO     | base:crawl:30 - fetched proxy 27.206.78.156:9000 from http://www.ip3366.net/free/?stype=1&page=5
+2020-11-22 11:32:32.838 | INFO     | processors.getter:run:39 - IP3366Crawler:27.206.78.156:9000 already added
+2020-11-22 11:32:32.838 | INFO     | base:crawl:30 - fetched proxy 49.70.33.138:9999 from http://www.ip3366.net/free/?stype=1&page=5
+2020-11-22 11:32:32.838 | INFO     | processors.getter:run:39 - IP3366Crawler:49.70.33.138:9999 already added
+2020-11-22 11:32:32.838 | INFO     | base:crawl:30 - fetched proxy 42.238.83.38:9999 from http://www.ip3366.net/free/?stype=1&page=5
+2020-11-22 11:32:32.854 | INFO     | processors.getter:run:39 - IP3366Crawler:42.238.83.38:9999 already added
+2020-11-22 11:32:32.854 | INFO     | base:crawl:30 - fetched proxy 27.205.41.40:9000 from http://www.ip3366.net/free/?stype=1&page=5
+2020-11-22 11:32:32.854 | INFO     | processors.getter:run:39 - IP3366Crawler:27.205.41.40:9000 already added
+2020-11-22 11:32:32.854 | INFO     | base:crawl:30 - fetched proxy 27.192.201.172:9000 from http://www.ip3366.net/free/?stype=1&page=5
+2020-11-22 11:32:32.854 | INFO     | processors.getter:run:39 - IP3366Crawler:27.192.201.172:9000 already added
+2020-11-22 11:32:32.854 | INFO     | base:crawl:30 - fetched proxy 27.206.74.66:9000 from http://www.ip3366.net/free/?stype=1&page=5
+2020-11-22 11:32:32.854 | INFO     | processors.getter:run:39 - IP3366Crawler:27.206.74.66:9000 already added
+2020-11-22 11:32:32.854 | INFO     | base:crawl:30 - fetched proxy 49.89.67.116:9999 from http://www.ip3366.net/free/?stype=1&page=5
+2020-11-22 11:32:32.854 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.67.116:9999 already added
+2020-11-22 11:32:32.854 | INFO     | base:crawl:30 - fetched proxy 49.70.33.234:9999 from http://www.ip3366.net/free/?stype=1&page=5
+2020-11-22 11:32:32.854 | INFO     | processors.getter:run:39 - IP3366Crawler:49.70.33.234:9999 already added
+2020-11-22 11:32:32.854 | INFO     | base:crawl:30 - fetched proxy 27.220.48.32:9000 from http://www.ip3366.net/free/?stype=1&page=5
+2020-11-22 11:32:32.854 | INFO     | processors.getter:run:39 - IP3366Crawler:27.220.48.32:9000 already added
+2020-11-22 11:32:32.854 | INFO     | base:crawl:30 - fetched proxy 27.192.175.143:9000 from http://www.ip3366.net/free/?stype=1&page=5
+2020-11-22 11:32:32.854 | INFO     | processors.getter:run:39 - IP3366Crawler:27.192.175.143:9000 already added
+2020-11-22 11:32:32.854 | INFO     | base:crawl:30 - fetched proxy 49.70.99.60:9999 from http://www.ip3366.net/free/?stype=1&page=5
+2020-11-22 11:32:32.854 | INFO     | processors.getter:run:39 - IP3366Crawler:49.70.99.60:9999 already added
+2020-11-22 11:32:32.854 | INFO     | base:crawl:27 - fetching http://www.ip3366.net/free/?stype=1&page=6
+2020-11-22 11:32:33.213 | INFO     | base:crawl:30 - fetched proxy 27.214.48.225:9000 from http://www.ip3366.net/free/?stype=1&page=6
+2020-11-22 11:32:33.213 | INFO     | processors.getter:run:39 - IP3366Crawler:27.214.48.225:9000 already added
+2020-11-22 11:32:33.213 | INFO     | base:crawl:30 - fetched proxy 27.214.49.78:9000 from http://www.ip3366.net/free/?stype=1&page=6
+2020-11-22 11:32:33.213 | INFO     | processors.getter:run:39 - IP3366Crawler:27.214.49.78:9000 already added
+2020-11-22 11:32:33.213 | INFO     | base:crawl:30 - fetched proxy 49.89.67.99:9999 from http://www.ip3366.net/free/?stype=1&page=6
+2020-11-22 11:32:33.213 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.67.99:9999 already added
+2020-11-22 11:32:33.213 | INFO     | base:crawl:30 - fetched proxy 27.220.51.78:9000 from http://www.ip3366.net/free/?stype=1&page=6
+2020-11-22 11:32:33.213 | INFO     | processors.getter:run:39 - IP3366Crawler:27.220.51.78:9000 already added
+2020-11-22 11:32:33.213 | INFO     | base:crawl:30 - fetched proxy 49.70.32.218:9999 from http://www.ip3366.net/free/?stype=1&page=6
+2020-11-22 11:32:33.213 | INFO     | processors.getter:run:39 - IP3366Crawler:49.70.32.218:9999 already added
+2020-11-22 11:32:33.213 | INFO     | base:crawl:30 - fetched proxy 49.86.27.246:9999 from http://www.ip3366.net/free/?stype=1&page=6
+2020-11-22 11:32:33.213 | INFO     | processors.getter:run:39 - IP3366Crawler:49.86.27.246:9999 already added
+2020-11-22 11:32:33.213 | INFO     | base:crawl:30 - fetched proxy 49.89.103.147:9999 from http://www.ip3366.net/free/?stype=1&page=6
+2020-11-22 11:32:33.213 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.103.147:9999 already added
+2020-11-22 11:32:33.213 | INFO     | base:crawl:30 - fetched proxy 49.70.89.179:9999 from http://www.ip3366.net/free/?stype=1&page=6
+2020-11-22 11:32:33.213 | INFO     | processors.getter:run:39 - IP3366Crawler:49.70.89.179:9999 already added
+2020-11-22 11:32:33.213 | INFO     | base:crawl:30 - fetched proxy 27.220.55.49:9000 from http://www.ip3366.net/free/?stype=1&page=6
+2020-11-22 11:32:33.213 | INFO     | processors.getter:run:39 - IP3366Crawler:27.220.55.49:9000 already added
+2020-11-22 11:32:33.213 | INFO     | base:crawl:30 - fetched proxy 49.70.32.128:9999 from http://www.ip3366.net/free/?stype=1&page=6
+2020-11-22 11:32:33.213 | INFO     | processors.getter:run:39 - IP3366Crawler:49.70.32.128:9999 already added
+2020-11-22 11:32:33.213 | INFO     | base:crawl:30 - fetched proxy 60.210.128.123:9000 from http://www.ip3366.net/free/?stype=1&page=6
+2020-11-22 11:32:33.213 | INFO     | processors.getter:run:39 - IP3366Crawler:60.210.128.123:9000 already added
+2020-11-22 11:32:33.213 | INFO     | base:crawl:30 - fetched proxy 27.206.180.12:9000 from http://www.ip3366.net/free/?stype=1&page=6
+2020-11-22 11:32:33.213 | INFO     | processors.getter:run:39 - IP3366Crawler:27.206.180.12:9000 already added
+2020-11-22 11:32:33.228 | INFO     | base:crawl:30 - fetched proxy 49.70.17.122:9999 from http://www.ip3366.net/free/?stype=1&page=6
+2020-11-22 11:32:33.228 | INFO     | processors.getter:run:39 - IP3366Crawler:49.70.17.122:9999 already added
+2020-11-22 11:32:33.228 | INFO     | base:crawl:30 - fetched proxy 49.70.33.231:9999 from http://www.ip3366.net/free/?stype=1&page=6
+2020-11-22 11:32:33.228 | INFO     | processors.getter:run:39 - IP3366Crawler:49.70.33.231:9999 already added
+2020-11-22 11:32:33.228 | INFO     | base:crawl:30 - fetched proxy 27.220.161.26:9000 from http://www.ip3366.net/free/?stype=1&page=6
+2020-11-22 11:32:33.228 | INFO     | processors.getter:run:39 - IP3366Crawler:27.220.161.26:9000 already added
+2020-11-22 11:32:33.228 | INFO     | base:crawl:27 - fetching http://www.ip3366.net/free/?stype=1&page=7
+2020-11-22 11:32:33.587 | INFO     | base:crawl:30 - fetched proxy 27.220.123.109:9000 from http://www.ip3366.net/free/?stype=1&page=7
+2020-11-22 11:32:33.587 | INFO     | processors.getter:run:39 - IP3366Crawler:27.220.123.109:9000 already added
+2020-11-22 11:32:33.587 | INFO     | base:crawl:30 - fetched proxy 49.70.99.129:9999 from http://www.ip3366.net/free/?stype=1&page=7
+2020-11-22 11:32:33.587 | INFO     | processors.getter:run:39 - IP3366Crawler:49.70.99.129:9999 already added
+2020-11-22 11:32:33.587 | INFO     | base:crawl:30 - fetched proxy 223.243.175.185:9999 from http://www.ip3366.net/free/?stype=1&page=7
+2020-11-22 11:32:33.587 | INFO     | processors.getter:run:39 - IP3366Crawler:223.243.175.185:9999 already added
+2020-11-22 11:32:33.587 | INFO     | base:crawl:30 - fetched proxy 27.220.127.101:9000 from http://www.ip3366.net/free/?stype=1&page=7
+2020-11-22 11:32:33.587 | INFO     | processors.getter:run:39 - IP3366Crawler:27.220.127.101:9000 already added
+2020-11-22 11:32:33.587 | INFO     | base:crawl:30 - fetched proxy 27.220.125.208:9000 from http://www.ip3366.net/free/?stype=1&page=7
+2020-11-22 11:32:33.587 | INFO     | processors.getter:run:39 - IP3366Crawler:27.220.125.208:9000 already added
+2020-11-22 11:32:33.587 | INFO     | base:crawl:30 - fetched proxy 27.220.54.0:9000 from http://www.ip3366.net/free/?stype=1&page=7
+2020-11-22 11:32:33.587 | INFO     | processors.getter:run:39 - IP3366Crawler:27.220.54.0:9000 already added
+2020-11-22 11:32:33.587 | INFO     | base:crawl:30 - fetched proxy 42.238.89.201:9999 from http://www.ip3366.net/free/?stype=1&page=7
+2020-11-22 11:32:33.587 | INFO     | processors.getter:run:39 - IP3366Crawler:42.238.89.201:9999 already added
+2020-11-22 11:32:33.587 | INFO     | base:crawl:30 - fetched proxy 49.89.143.190:9999 from http://www.ip3366.net/free/?stype=1&page=7
+2020-11-22 11:32:33.587 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.143.190:9999 already added
+2020-11-22 11:32:33.587 | INFO     | base:crawl:30 - fetched proxy 59.62.27.35:9000 from http://www.ip3366.net/free/?stype=1&page=7
+2020-11-22 11:32:33.587 | INFO     | processors.getter:run:39 - IP3366Crawler:59.62.27.35:9000 already added
+2020-11-22 11:32:33.587 | INFO     | base:crawl:30 - fetched proxy 49.87.10.106:9999 from http://www.ip3366.net/free/?stype=1&page=7
+2020-11-22 11:32:33.587 | INFO     | processors.getter:run:39 - IP3366Crawler:49.87.10.106:9999 already added
+2020-11-22 11:32:33.587 | INFO     | processors.getter:run:36 - crawler KuaidailiCrawler to get proxy
+2020-11-22 11:32:33.587 | INFO     | base:crawl:27 - fetching https://www.kuaidaili.com/free/inha/1/
+2020-11-22 11:32:34.305 | INFO     | base:crawl:30 - fetched proxy 123.163.121.19:9999 from https://www.kuaidaili.com/free/inha/1/
+2020-11-22 11:32:34.305 | INFO     | processors.getter:run:39 - KuaidailiCrawler:123.163.121.19:9999 already added
+2020-11-22 11:32:34.305 | INFO     | base:crawl:30 - fetched proxy 117.69.12.132:9999 from https://www.kuaidaili.com/free/inha/1/
+2020-11-22 11:32:34.305 | INFO     | processors.getter:run:39 - KuaidailiCrawler:117.69.12.132:9999 already added
+2020-11-22 11:32:34.305 | INFO     | base:crawl:30 - fetched proxy 1.198.72.188:9999 from https://www.kuaidaili.com/free/inha/1/
+2020-11-22 11:32:34.305 | INFO     | processors.getter:run:39 - KuaidailiCrawler:1.198.72.188:9999 already added
+2020-11-22 11:32:34.305 | INFO     | base:crawl:30 - fetched proxy 113.124.92.87:9999 from https://www.kuaidaili.com/free/inha/1/
+2020-11-22 11:32:34.305 | INFO     | processors.getter:run:39 - KuaidailiCrawler:113.124.92.87:9999 already added
+2020-11-22 11:32:34.320 | INFO     | base:crawl:30 - fetched proxy 175.42.68.145:9999 from https://www.kuaidaili.com/free/inha/1/
+2020-11-22 11:32:34.320 | INFO     | processors.getter:run:39 - KuaidailiCrawler:175.42.68.145:9999 already added
+2020-11-22 11:32:34.320 | INFO     | base:crawl:30 - fetched proxy 60.167.21.211:1133 from https://www.kuaidaili.com/free/inha/1/
+2020-11-22 11:32:34.320 | INFO     | processors.getter:run:39 - KuaidailiCrawler:60.167.21.211:1133 already added
+2020-11-22 11:32:34.320 | INFO     | base:crawl:30 - fetched proxy 115.29.170.58:8118 from https://www.kuaidaili.com/free/inha/1/
+2020-11-22 11:32:34.320 | INFO     | processors.getter:run:39 - KuaidailiCrawler:115.29.170.58:8118 already added
+2020-11-22 11:32:34.320 | INFO     | base:crawl:30 - fetched proxy 114.99.8.63:3000 from https://www.kuaidaili.com/free/inha/1/
+2020-11-22 11:32:34.320 | INFO     | processors.getter:run:39 - KuaidailiCrawler:114.99.8.63:3000 already added
+2020-11-22 11:32:34.320 | INFO     | base:crawl:30 - fetched proxy 27.205.40.116:9000 from https://www.kuaidaili.com/free/inha/1/
+2020-11-22 11:32:34.320 | INFO     | processors.getter:run:39 - KuaidailiCrawler:27.205.40.116:9000 already added
+2020-11-22 11:32:34.320 | INFO     | base:crawl:30 - fetched proxy 175.43.58.20:9999 from https://www.kuaidaili.com/free/inha/1/
+2020-11-22 11:32:34.320 | INFO     | processors.getter:run:39 - KuaidailiCrawler:175.43.58.20:9999 already added
+2020-11-22 11:32:34.320 | INFO     | base:crawl:30 - fetched proxy 182.34.36.224:9999 from https://www.kuaidaili.com/free/inha/1/
+2020-11-22 11:32:34.320 | INFO     | processors.getter:run:39 - KuaidailiCrawler:182.34.36.224:9999 already added
+2020-11-22 11:32:34.320 | INFO     | base:crawl:30 - fetched proxy 175.42.158.226:9999 from https://www.kuaidaili.com/free/inha/1/
+2020-11-22 11:32:34.320 | INFO     | processors.getter:run:39 - KuaidailiCrawler:175.42.158.226:9999 already added
+2020-11-22 11:32:34.320 | INFO     | base:crawl:30 - fetched proxy 1.197.203.99:9999 from https://www.kuaidaili.com/free/inha/1/
+2020-11-22 11:32:34.320 | INFO     | processors.getter:run:39 - KuaidailiCrawler:1.197.203.99:9999 already added
+2020-11-22 11:32:34.320 | INFO     | base:crawl:30 - fetched proxy 175.42.122.53:9999 from https://www.kuaidaili.com/free/inha/1/
+2020-11-22 11:32:34.320 | INFO     | processors.getter:run:39 - KuaidailiCrawler:175.42.122.53:9999 already added
+2020-11-22 11:32:34.320 | INFO     | base:crawl:30 - fetched proxy 171.12.115.27:9999 from https://www.kuaidaili.com/free/inha/1/
+2020-11-22 11:32:34.320 | INFO     | processors.getter:run:39 - KuaidailiCrawler:171.12.115.27:9999 already added
+2020-11-22 11:32:34.320 | INFO     | base:crawl:27 - fetching https://www.kuaidaili.com/free/inha/2/
+2020-11-22 11:32:36.931 | INFO     | base:crawl:30 - fetched proxy 123.149.137.212:9999 from https://www.kuaidaili.com/free/inha/2/
+2020-11-22 11:32:36.931 | INFO     | processors.getter:run:39 - KuaidailiCrawler:123.149.137.212:9999 already added
+2020-11-22 11:32:36.931 | INFO     | base:crawl:30 - fetched proxy 123.55.98.171:9999 from https://www.kuaidaili.com/free/inha/2/
+2020-11-22 11:32:36.931 | INFO     | processors.getter:run:39 - KuaidailiCrawler:123.55.98.171:9999 already added
+2020-11-22 11:32:36.947 | INFO     | base:crawl:30 - fetched proxy 175.44.108.197:9999 from https://www.kuaidaili.com/free/inha/2/
+2020-11-22 11:32:36.947 | INFO     | processors.getter:run:39 - KuaidailiCrawler:175.44.108.197:9999 already added
+2020-11-22 11:32:36.947 | INFO     | base:crawl:30 - fetched proxy 115.221.245.228:9999 from https://www.kuaidaili.com/free/inha/2/
+2020-11-22 11:32:36.947 | INFO     | processors.getter:run:39 - KuaidailiCrawler:115.221.245.228:9999 already added
+2020-11-22 11:32:36.947 | INFO     | base:crawl:30 - fetched proxy 1.198.72.87:9999 from https://www.kuaidaili.com/free/inha/2/
+2020-11-22 11:32:36.947 | INFO     | processors.getter:run:39 - KuaidailiCrawler:1.198.72.87:9999 already added
+2020-11-22 11:32:36.947 | INFO     | base:crawl:30 - fetched proxy 175.42.68.73:9999 from https://www.kuaidaili.com/free/inha/2/
+2020-11-22 11:32:36.947 | INFO     | processors.getter:run:39 - KuaidailiCrawler:175.42.68.73:9999 already added
+2020-11-22 11:32:36.947 | INFO     | base:crawl:30 - fetched proxy 171.11.28.97:9999 from https://www.kuaidaili.com/free/inha/2/
+2020-11-22 11:32:36.947 | INFO     | processors.getter:run:39 - KuaidailiCrawler:171.11.28.97:9999 already added
+2020-11-22 11:32:36.947 | INFO     | base:crawl:30 - fetched proxy 58.22.177.69:9999 from https://www.kuaidaili.com/free/inha/2/
+2020-11-22 11:32:36.947 | INFO     | processors.getter:run:39 - KuaidailiCrawler:58.22.177.69:9999 already added
+2020-11-22 11:32:36.947 | INFO     | base:crawl:30 - fetched proxy 183.166.96.14:9999 from https://www.kuaidaili.com/free/inha/2/
+2020-11-22 11:32:36.947 | INFO     | processors.getter:run:39 - KuaidailiCrawler:183.166.96.14:9999 already added
+2020-11-22 11:32:36.947 | INFO     | base:crawl:30 - fetched proxy 1.196.177.213:9999 from https://www.kuaidaili.com/free/inha/2/
+2020-11-22 11:32:36.947 | INFO     | processors.getter:run:39 - KuaidailiCrawler:1.196.177.213:9999 already added
+2020-11-22 11:32:36.947 | INFO     | base:crawl:30 - fetched proxy 123.55.114.77:9999 from https://www.kuaidaili.com/free/inha/2/
+2020-11-22 11:32:36.947 | INFO     | processors.getter:run:39 - KuaidailiCrawler:123.55.114.77:9999 already added
+2020-11-22 11:32:36.947 | INFO     | base:crawl:30 - fetched proxy 36.248.133.117:9999 from https://www.kuaidaili.com/free/inha/2/
+2020-11-22 11:32:36.947 | INFO     | processors.getter:run:39 - KuaidailiCrawler:36.248.133.117:9999 already added
+2020-11-22 11:32:36.947 | INFO     | base:crawl:30 - fetched proxy 123.163.117.62:9999 from https://www.kuaidaili.com/free/inha/2/
+2020-11-22 11:32:36.947 | INFO     | processors.getter:run:39 - KuaidailiCrawler:123.163.117.62:9999 already added
+2020-11-22 11:32:36.947 | INFO     | base:crawl:30 - fetched proxy 1.197.204.52:9999 from https://www.kuaidaili.com/free/inha/2/
+2020-11-22 11:32:36.962 | INFO     | processors.getter:run:39 - KuaidailiCrawler:1.197.204.52:9999 already added
+2020-11-22 11:32:36.962 | INFO     | base:crawl:30 - fetched proxy 175.155.140.34:1133 from https://www.kuaidaili.com/free/inha/2/
+2020-11-22 11:32:36.962 | INFO     | processors.getter:run:39 - KuaidailiCrawler:175.155.140.34:1133 already added
+2020-11-22 11:32:36.962 | INFO     | base:crawl:27 - fetching https://www.kuaidaili.com/free/inha/3/
+2020-11-22 11:32:39.568 | INFO     | base:crawl:30 - fetched proxy 115.218.5.120:9000 from https://www.kuaidaili.com/free/inha/3/
+2020-11-22 11:32:39.568 | INFO     | processors.getter:run:39 - KuaidailiCrawler:115.218.5.120:9000 already added
+2020-11-22 11:32:39.568 | INFO     | base:crawl:30 - fetched proxy 182.87.38.156:9000 from https://www.kuaidaili.com/free/inha/3/
+2020-11-22 11:32:39.568 | INFO     | processors.getter:run:39 - KuaidailiCrawler:182.87.38.156:9000 already added
+2020-11-22 11:32:39.568 | INFO     | base:crawl:30 - fetched proxy 60.168.207.253:1133 from https://www.kuaidaili.com/free/inha/3/
+2020-11-22 11:32:39.568 | INFO     | processors.getter:run:39 - KuaidailiCrawler:60.168.207.253:1133 already added
+2020-11-22 11:32:39.568 | INFO     | base:crawl:30 - fetched proxy 114.99.13.141:1133 from https://www.kuaidaili.com/free/inha/3/
+2020-11-22 11:32:39.568 | INFO     | processors.getter:run:39 - KuaidailiCrawler:114.99.13.141:1133 already added
+2020-11-22 11:32:39.568 | INFO     | base:crawl:30 - fetched proxy 119.108.172.169:9000 from https://www.kuaidaili.com/free/inha/3/
+2020-11-22 11:32:39.568 | INFO     | processors.getter:run:39 - KuaidailiCrawler:119.108.172.169:9000 already added
+2020-11-22 11:32:39.584 | INFO     | base:crawl:30 - fetched proxy 36.248.133.81:9999 from https://www.kuaidaili.com/free/inha/3/
+2020-11-22 11:32:39.584 | INFO     | processors.getter:run:39 - KuaidailiCrawler:36.248.133.81:9999 already added
+2020-11-22 11:32:39.584 | INFO     | base:crawl:30 - fetched proxy 114.239.29.206:9999 from https://www.kuaidaili.com/free/inha/3/
+2020-11-22 11:32:39.584 | INFO     | processors.getter:run:39 - KuaidailiCrawler:114.239.29.206:9999 already added
+2020-11-22 11:32:39.584 | INFO     | base:crawl:30 - fetched proxy 1.196.177.81:9999 from https://www.kuaidaili.com/free/inha/3/
+2020-11-22 11:32:39.584 | INFO     | processors.getter:run:39 - KuaidailiCrawler:1.196.177.81:9999 already added
+2020-11-22 11:32:39.584 | INFO     | base:crawl:30 - fetched proxy 175.44.109.13:9999 from https://www.kuaidaili.com/free/inha/3/
+2020-11-22 11:32:39.584 | INFO     | processors.getter:run:39 - KuaidailiCrawler:175.44.109.13:9999 already added
+2020-11-22 11:32:39.584 | INFO     | base:crawl:30 - fetched proxy 113.124.86.220:9999 from https://www.kuaidaili.com/free/inha/3/
+2020-11-22 11:32:39.584 | INFO     | processors.getter:run:39 - KuaidailiCrawler:113.124.86.220:9999 already added
+2020-11-22 11:32:39.584 | INFO     | base:crawl:30 - fetched proxy 175.42.68.174:9999 from https://www.kuaidaili.com/free/inha/3/
+2020-11-22 11:32:39.584 | INFO     | processors.getter:run:39 - KuaidailiCrawler:175.42.68.174:9999 already added
+2020-11-22 11:32:39.584 | INFO     | base:crawl:30 - fetched proxy 182.34.34.20:9999 from https://www.kuaidaili.com/free/inha/3/
+2020-11-22 11:32:39.584 | INFO     | processors.getter:run:39 - KuaidailiCrawler:182.34.34.20:9999 already added
+2020-11-22 11:32:39.584 | INFO     | base:crawl:30 - fetched proxy 113.194.140.60:9999 from https://www.kuaidaili.com/free/inha/3/
+2020-11-22 11:32:39.584 | INFO     | processors.getter:run:39 - KuaidailiCrawler:113.194.140.60:9999 already added
+2020-11-22 11:32:39.584 | INFO     | base:crawl:30 - fetched proxy 113.194.48.139:9999 from https://www.kuaidaili.com/free/inha/3/
+2020-11-22 11:32:39.584 | INFO     | processors.getter:run:39 - KuaidailiCrawler:113.194.48.139:9999 already added
+2020-11-22 11:32:39.584 | INFO     | base:crawl:30 - fetched proxy 123.55.114.42:9999 from https://www.kuaidaili.com/free/inha/3/
+2020-11-22 11:32:39.584 | INFO     | processors.getter:run:39 - KuaidailiCrawler:123.55.114.42:9999 already added
+2020-11-22 11:32:39.584 | INFO     | base:crawl:27 - fetching https://www.kuaidaili.com/free/inha/4/
+2020-11-22 11:32:42.271 | INFO     | base:crawl:30 - fetched proxy 175.43.151.240:9999 from https://www.kuaidaili.com/free/inha/4/
+2020-11-22 11:32:42.271 | INFO     | processors.getter:run:39 - KuaidailiCrawler:175.43.151.240:9999 already added
+2020-11-22 11:32:42.271 | INFO     | base:crawl:30 - fetched proxy 123.169.118.141:9999 from https://www.kuaidaili.com/free/inha/4/
+2020-11-22 11:32:42.271 | INFO     | processors.getter:run:39 - KuaidailiCrawler:123.169.118.141:9999 already added
+2020-11-22 11:32:42.271 | INFO     | base:crawl:30 - fetched proxy 123.55.101.33:9999 from https://www.kuaidaili.com/free/inha/4/
+2020-11-22 11:32:42.271 | INFO     | processors.getter:run:39 - KuaidailiCrawler:123.55.101.33:9999 already added
+2020-11-22 11:32:42.271 | INFO     | base:crawl:30 - fetched proxy 1.197.203.69:9999 from https://www.kuaidaili.com/free/inha/4/
+2020-11-22 11:32:42.271 | INFO     | processors.getter:run:39 - KuaidailiCrawler:1.197.203.69:9999 already added
+2020-11-22 11:32:42.286 | INFO     | base:crawl:30 - fetched proxy 120.83.122.236:9999 from https://www.kuaidaili.com/free/inha/4/
+2020-11-22 11:32:42.286 | INFO     | processors.getter:run:39 - KuaidailiCrawler:120.83.122.236:9999 already added
+2020-11-22 11:32:42.286 | INFO     | base:crawl:30 - fetched proxy 36.248.132.246:9999 from https://www.kuaidaili.com/free/inha/4/
+2020-11-22 11:32:42.286 | INFO     | processors.getter:run:39 - KuaidailiCrawler:36.248.132.246:9999 already added
+2020-11-22 11:32:42.286 | INFO     | base:crawl:30 - fetched proxy 58.22.177.123:9999 from https://www.kuaidaili.com/free/inha/4/
+2020-11-22 11:32:42.286 | INFO     | processors.getter:run:39 - KuaidailiCrawler:58.22.177.123:9999 already added
+2020-11-22 11:32:42.286 | INFO     | base:crawl:30 - fetched proxy 36.248.133.68:9999 from https://www.kuaidaili.com/free/inha/4/
+2020-11-22 11:32:42.286 | INFO     | processors.getter:run:39 - KuaidailiCrawler:36.248.133.68:9999 already added
+2020-11-22 11:32:42.286 | INFO     | base:crawl:30 - fetched proxy 121.232.199.252:9000 from https://www.kuaidaili.com/free/inha/4/
+2020-11-22 11:32:42.286 | INFO     | processors.getter:run:39 - KuaidailiCrawler:121.232.199.252:9000 already added
+2020-11-22 11:32:42.286 | INFO     | base:crawl:30 - fetched proxy 114.99.15.142:1133 from https://www.kuaidaili.com/free/inha/4/
+2020-11-22 11:32:42.286 | INFO     | processors.getter:run:39 - KuaidailiCrawler:114.99.15.142:1133 already added
+2020-11-22 11:32:42.286 | INFO     | base:crawl:30 - fetched proxy 123.149.136.23:9999 from https://www.kuaidaili.com/free/inha/4/
+2020-11-22 11:32:42.286 | INFO     | processors.getter:run:39 - KuaidailiCrawler:123.149.136.23:9999 already added
+2020-11-22 11:32:42.286 | INFO     | base:crawl:30 - fetched proxy 123.149.136.209:9999 from https://www.kuaidaili.com/free/inha/4/
+2020-11-22 11:32:42.286 | INFO     | processors.getter:run:39 - KuaidailiCrawler:123.149.136.209:9999 already added
+2020-11-22 11:32:42.286 | INFO     | base:crawl:30 - fetched proxy 114.104.138.12:3000 from https://www.kuaidaili.com/free/inha/4/
+2020-11-22 11:32:42.286 | INFO     | processors.getter:run:39 - KuaidailiCrawler:114.104.138.12:3000 already added
+2020-11-22 11:32:42.286 | INFO     | base:crawl:30 - fetched proxy 121.232.148.211:9000 from https://www.kuaidaili.com/free/inha/4/
+2020-11-22 11:32:42.286 | INFO     | processors.getter:run:39 - KuaidailiCrawler:121.232.148.211:9000 already added
+2020-11-22 11:32:42.286 | INFO     | base:crawl:30 - fetched proxy 1.198.72.73:9999 from https://www.kuaidaili.com/free/inha/4/
+2020-11-22 11:32:42.302 | INFO     | processors.getter:run:39 - KuaidailiCrawler:1.198.72.73:9999 already added
+2020-11-22 11:32:42.302 | INFO     | base:crawl:27 - fetching https://www.kuaidaili.com/free/inha/5/
+2020-11-22 11:32:44.929 | INFO     | base:crawl:30 - fetched proxy 1.198.72.73:9999 from https://www.kuaidaili.com/free/inha/5/
+2020-11-22 11:32:44.929 | INFO     | processors.getter:run:39 - KuaidailiCrawler:1.198.72.73:9999 already added
+2020-11-22 11:32:44.929 | INFO     | base:crawl:30 - fetched proxy 110.243.29.17:9999 from https://www.kuaidaili.com/free/inha/5/
+2020-11-22 11:32:44.929 | INFO     | processors.getter:run:39 - KuaidailiCrawler:110.243.29.17:9999 already added
+2020-11-22 11:32:44.929 | INFO     | base:crawl:30 - fetched proxy 175.42.123.89:9999 from https://www.kuaidaili.com/free/inha/5/
+2020-11-22 11:32:44.929 | INFO     | processors.getter:run:39 - KuaidailiCrawler:175.42.123.89:9999 already added
+2020-11-22 11:32:44.929 | INFO     | base:crawl:30 - fetched proxy 140.255.184.238:9999 from https://www.kuaidaili.com/free/inha/5/
+2020-11-22 11:32:44.929 | INFO     | processors.getter:run:39 - KuaidailiCrawler:140.255.184.238:9999 already added
+2020-11-22 11:32:44.929 | INFO     | base:crawl:30 - fetched proxy 123.163.27.180:9999 from https://www.kuaidaili.com/free/inha/5/
+2020-11-22 11:32:44.929 | INFO     | processors.getter:run:39 - KuaidailiCrawler:123.163.27.180:9999 already added
+2020-11-22 11:32:44.929 | INFO     | base:crawl:30 - fetched proxy 123.55.101.167:9999 from https://www.kuaidaili.com/free/inha/5/
+2020-11-22 11:32:44.929 | INFO     | processors.getter:run:39 - KuaidailiCrawler:123.55.101.167:9999 already added
+2020-11-22 11:32:44.929 | INFO     | base:crawl:30 - fetched proxy 36.248.133.37:9999 from https://www.kuaidaili.com/free/inha/5/
+2020-11-22 11:32:44.929 | INFO     | processors.getter:run:39 - KuaidailiCrawler:36.248.133.37:9999 already added
+2020-11-22 11:32:44.929 | INFO     | base:crawl:30 - fetched proxy 171.12.221.227:9999 from https://www.kuaidaili.com/free/inha/5/
+2020-11-22 11:32:44.945 | INFO     | processors.getter:run:39 - KuaidailiCrawler:171.12.221.227:9999 already added
+2020-11-22 11:32:44.945 | INFO     | base:crawl:30 - fetched proxy 175.44.108.106:9999 from https://www.kuaidaili.com/free/inha/5/
+2020-11-22 11:32:44.945 | INFO     | processors.getter:run:39 - KuaidailiCrawler:175.44.108.106:9999 already added
+2020-11-22 11:32:44.945 | INFO     | base:crawl:30 - fetched proxy 182.34.34.222:9999 from https://www.kuaidaili.com/free/inha/5/
+2020-11-22 11:32:44.945 | INFO     | processors.getter:run:39 - KuaidailiCrawler:182.34.34.222:9999 already added
+2020-11-22 11:32:44.945 | INFO     | base:crawl:30 - fetched proxy 175.44.109.141:9999 from https://www.kuaidaili.com/free/inha/5/
+2020-11-22 11:32:44.945 | INFO     | processors.getter:run:39 - KuaidailiCrawler:175.44.109.141:9999 already added
+2020-11-22 11:32:44.945 | INFO     | base:crawl:30 - fetched proxy 123.55.102.66:9999 from https://www.kuaidaili.com/free/inha/5/
+2020-11-22 11:32:44.945 | INFO     | processors.getter:run:39 - KuaidailiCrawler:123.55.102.66:9999 already added
+2020-11-22 11:32:44.945 | INFO     | base:crawl:30 - fetched proxy 1.197.204.185:9999 from https://www.kuaidaili.com/free/inha/5/
+2020-11-22 11:32:44.945 | INFO     | processors.getter:run:39 - KuaidailiCrawler:1.197.204.185:9999 already added
+2020-11-22 11:32:44.945 | INFO     | base:crawl:30 - fetched proxy 171.12.115.240:9999 from https://www.kuaidaili.com/free/inha/5/
+2020-11-22 11:32:44.945 | INFO     | processors.getter:run:39 - KuaidailiCrawler:171.12.115.240:9999 already added
+2020-11-22 11:32:44.945 | INFO     | base:crawl:30 - fetched proxy 171.12.115.236:9999 from https://www.kuaidaili.com/free/inha/5/
+2020-11-22 11:32:44.945 | INFO     | processors.getter:run:39 - KuaidailiCrawler:171.12.115.236:9999 already added
+2020-11-22 11:32:44.945 | INFO     | processors.getter:run:36 - crawler XiladailiCrawler to get proxy
+2020-11-22 11:32:44.945 | INFO     | base:crawl:27 - fetching http://www.xiladaili.com/
+2020-11-22 11:32:45.197 | INFO     | base:crawl:30 - fetched proxy 117.66.85.17:9999 from http://www.xiladaili.com/
+2020-11-22 11:32:45.197 | INFO     | processors.getter:run:39 - XiladailiCrawler:117.66.85.17:9999 already added
+2020-11-22 11:32:45.197 | INFO     | base:crawl:30 - fetched proxy 183.166.21.195:9999 from http://www.xiladaili.com/
+2020-11-22 11:32:45.197 | INFO     | processors.getter:run:39 - XiladailiCrawler:183.166.21.195:9999 already added
+2020-11-22 11:32:45.197 | INFO     | base:crawl:30 - fetched proxy 123.55.98.215:9999 from http://www.xiladaili.com/
+2020-11-22 11:32:45.212 | INFO     | processors.getter:run:39 - XiladailiCrawler:123.55.98.215:9999 already added
+2020-11-22 11:32:45.212 | INFO     | base:crawl:30 - fetched proxy 122.5.109.93:9999 from http://www.xiladaili.com/
+2020-11-22 11:32:45.212 | INFO     | processors.getter:run:39 - XiladailiCrawler:122.5.109.93:9999 already added
+2020-11-22 11:32:45.212 | INFO     | base:crawl:30 - fetched proxy 124.94.255.97:9999 from http://www.xiladaili.com/
+2020-11-22 11:32:45.212 | INFO     | processors.getter:run:39 - XiladailiCrawler:124.94.255.97:9999 already added
+2020-11-22 11:32:45.212 | INFO     | base:crawl:30 - fetched proxy 46.41.134.97:5836 from http://www.xiladaili.com/
+2020-11-22 11:32:45.212 | INFO     | processors.getter:run:39 - XiladailiCrawler:46.41.134.97:5836 already added
+2020-11-22 11:32:45.212 | INFO     | base:crawl:30 - fetched proxy 115.53.35.207:9999 from http://www.xiladaili.com/
+2020-11-22 11:32:45.212 | INFO     | processors.getter:run:39 - XiladailiCrawler:115.53.35.207:9999 already added
+2020-11-22 11:32:45.212 | INFO     | base:crawl:30 - fetched proxy 115.221.243.7:9999 from http://www.xiladaili.com/
+2020-11-22 11:32:45.212 | INFO     | processors.getter:run:39 - XiladailiCrawler:115.221.243.7:9999 already added
+2020-11-22 11:32:45.212 | INFO     | base:crawl:30 - fetched proxy 203.176.132.50:46578 from http://www.xiladaili.com/
+2020-11-22 11:32:45.212 | INFO     | processors.getter:run:39 - XiladailiCrawler:203.176.132.50:46578 already added
+2020-11-22 11:32:45.212 | INFO     | base:crawl:30 - fetched proxy 112.95.23.119:8888 from http://www.xiladaili.com/
+2020-11-22 11:32:45.212 | INFO     | processors.getter:run:39 - XiladailiCrawler:112.95.23.119:8888 already added
+2020-11-22 11:32:45.212 | INFO     | base:crawl:30 - fetched proxy 122.5.107.25:9999 from http://www.xiladaili.com/
+2020-11-22 11:32:45.212 | INFO     | processors.getter:run:39 - XiladailiCrawler:122.5.107.25:9999 already added
+2020-11-22 11:32:45.212 | INFO     | base:crawl:30 - fetched proxy 114.239.151.30:9999 from http://www.xiladaili.com/
+2020-11-22 11:32:45.212 | INFO     | processors.getter:run:39 - XiladailiCrawler:114.239.151.30:9999 already added
+2020-11-22 11:32:45.212 | INFO     | base:crawl:30 - fetched proxy 218.66.253.146:8800 from http://www.xiladaili.com/
+2020-11-22 11:32:45.212 | INFO     | processors.getter:run:39 - XiladailiCrawler:218.66.253.146:8800 already added
+2020-11-22 11:32:45.212 | INFO     | base:crawl:30 - fetched proxy 58.250.21.56:3128 from http://www.xiladaili.com/
+2020-11-22 11:32:45.212 | INFO     | processors.getter:run:39 - XiladailiCrawler:58.250.21.56:3128 already added
+2020-11-22 11:32:45.212 | INFO     | base:crawl:30 - fetched proxy 222.94.196.64:3128 from http://www.xiladaili.com/
+2020-11-22 11:32:45.212 | INFO     | processors.getter:run:39 - XiladailiCrawler:222.94.196.64:3128 already added
+2020-11-22 11:32:45.212 | INFO     | base:crawl:30 - fetched proxy 113.124.92.92:9999 from http://www.xiladaili.com/
+2020-11-22 11:32:45.228 | INFO     | processors.getter:run:39 - XiladailiCrawler:113.124.92.92:9999 already added
+2020-11-22 11:32:45.228 | INFO     | base:crawl:30 - fetched proxy 112.95.23.122:8888 from http://www.xiladaili.com/
+2020-11-22 11:32:45.228 | INFO     | processors.getter:run:39 - XiladailiCrawler:112.95.23.122:8888 already added
+2020-11-22 11:32:45.228 | INFO     | base:crawl:30 - fetched proxy 122.5.96.162:9999 from http://www.xiladaili.com/
+2020-11-22 11:32:45.228 | INFO     | processors.getter:run:39 - XiladailiCrawler:122.5.96.162:9999 already added
+2020-11-22 11:32:45.228 | INFO     | base:crawl:30 - fetched proxy 123.101.207.91:9999 from http://www.xiladaili.com/
+2020-11-22 11:32:45.228 | INFO     | processors.getter:run:39 - XiladailiCrawler:123.101.207.91:9999 already added
+2020-11-22 11:32:45.228 | INFO     | base:crawl:30 - fetched proxy 39.67.196.105:9999 from http://www.xiladaili.com/
+2020-11-22 11:32:45.228 | INFO     | processors.getter:run:39 - XiladailiCrawler:39.67.196.105:9999 already added
+2020-11-22 11:32:45.228 | INFO     | base:crawl:30 - fetched proxy 117.95.198.20:9999 from http://www.xiladaili.com/
+2020-11-22 11:32:45.228 | INFO     | processors.getter:run:39 - XiladailiCrawler:117.95.198.20:9999 already added
+2020-11-22 11:32:45.228 | INFO     | base:crawl:30 - fetched proxy 182.46.110.98:9999 from http://www.xiladaili.com/
+2020-11-22 11:32:45.228 | INFO     | processors.getter:run:39 - XiladailiCrawler:182.46.110.98:9999 already added
+2020-11-22 11:32:45.228 | INFO     | base:crawl:30 - fetched proxy 123.101.207.85:9999 from http://www.xiladaili.com/
+2020-11-22 11:32:45.228 | INFO     | processors.getter:run:39 - XiladailiCrawler:123.101.207.85:9999 already added
+2020-11-22 11:32:45.228 | INFO     | base:crawl:30 - fetched proxy 116.196.85.150:3128 from http://www.xiladaili.com/
+2020-11-22 11:32:45.228 | INFO     | processors.getter:run:39 - XiladailiCrawler:116.196.85.150:3128 already added
+2020-11-22 11:32:45.228 | INFO     | base:crawl:30 - fetched proxy 182.46.123.174:9999 from http://www.xiladaili.com/
+2020-11-22 11:32:45.228 | INFO     | processors.getter:run:39 - XiladailiCrawler:182.46.123.174:9999 already added
+2020-11-22 11:32:45.228 | INFO     | base:crawl:30 - fetched proxy 221.5.80.66:3128 from http://www.xiladaili.com/
+2020-11-22 11:32:45.228 | INFO     | processors.getter:run:39 - XiladailiCrawler:221.5.80.66:3128 already added
+2020-11-22 11:32:45.228 | INFO     | base:crawl:30 - fetched proxy 121.226.215.242:9999 from http://www.xiladaili.com/
+2020-11-22 11:32:45.228 | INFO     | processors.getter:run:39 - XiladailiCrawler:121.226.215.242:9999 already added
+2020-11-22 11:32:45.228 | INFO     | base:crawl:30 - fetched proxy 113.195.228.187:9999 from http://www.xiladaili.com/
+2020-11-22 11:32:45.228 | INFO     | processors.getter:run:39 - XiladailiCrawler:113.195.228.187:9999 already added
+2020-11-22 11:32:45.244 | INFO     | base:crawl:30 - fetched proxy 123.56.161.63:80 from http://www.xiladaili.com/
+2020-11-22 11:32:45.244 | INFO     | processors.getter:run:39 - XiladailiCrawler:123.56.161.63:80 already added
+2020-11-22 11:32:51.376 | INFO     | storages.Redis:decrease:73 - 39.84.116.148:9999 score decrease 1, current 9.0
+2020-11-22 11:32:51.376 | DEBUG    | processors.tester:test:64 - proxy 39.84.116.148:9999 is invalid, decrease score
+2020-11-22 11:32:51.394 | INFO     | storages.Redis:decrease:73 - 114.99.9.76:8314 score decrease 1, current 9.0
+2020-11-22 11:32:51.394 | DEBUG    | processors.tester:test:64 - proxy 114.99.9.76:8314 is invalid, decrease score
+2020-11-22 11:32:51.398 | INFO     | storages.Redis:decrease:73 - 49.86.26.24:8576 score decrease 1, current 9.0
+2020-11-22 11:32:51.398 | DEBUG    | processors.tester:test:64 - proxy 49.86.26.24:8576 is invalid, decrease score
+2020-11-22 11:32:51.399 | INFO     | storages.Redis:decrease:73 - 117.240.28.81:8080 score decrease 1, current 8.0
+2020-11-22 11:32:51.399 | DEBUG    | processors.tester:test:64 - proxy 117.240.28.81:8080 is invalid, decrease score
+2020-11-22 11:32:51.400 | INFO     | storages.Redis:decrease:73 - 222.189.190.116:8804 score decrease 1, current 9.0
+2020-11-22 11:32:51.400 | DEBUG    | processors.tester:test:64 - proxy 222.189.190.116:8804 is invalid, decrease score
+2020-11-22 11:32:51.403 | INFO     | storages.Redis:decrease:73 - 1.198.72.71:8472 score decrease 1, current 9.0
+2020-11-22 11:32:51.403 | DEBUG    | processors.tester:test:64 - proxy 1.198.72.71:8472 is invalid, decrease score
+2020-11-22 11:32:51.426 | INFO     | storages.Redis:decrease:73 - 179.14.147.162:8083 score decrease 1, current 9.0
+2020-11-22 11:32:51.426 | DEBUG    | processors.tester:test:64 - proxy 179.14.147.162:8083 is invalid, decrease score
+2020-11-22 11:32:51.464 | INFO     | storages.Redis:decrease:73 - 1.0.179.255:8080 score decrease 1, current 9.0
+2020-11-22 11:32:51.464 | DEBUG    | processors.tester:test:64 - proxy 1.0.179.255:8080 is invalid, decrease score
+2020-11-22 11:32:51.480 | INFO     | storages.Redis:decrease:73 - 36.248.129.23:8830 score decrease 1, current 9.0
+2020-11-22 11:32:51.480 | DEBUG    | processors.tester:test:64 - proxy 36.248.129.23:8830 is invalid, decrease score
+2020-11-22 11:32:51.596 | INFO     | storages.Redis:decrease:73 - 60.167.159.217:8191 score decrease 1, current 9.0
+2020-11-22 11:32:51.596 | DEBUG    | processors.tester:test:64 - proxy 60.167.159.217:8191 is invalid, decrease score
+2020-11-22 11:32:52.556 | INFO     | storages.Redis:decrease:73 - 123.101.207.140:9999 score decrease 1, current 9.0
+2020-11-22 11:32:52.556 | DEBUG    | processors.tester:test:64 - proxy 123.101.207.140:9999 is invalid, decrease score
+2020-11-22 11:32:52.714 | INFO     | storages.Redis:decrease:73 - 49.89.103.241:8206 score decrease 1, current 9.0
+2020-11-22 11:32:52.714 | DEBUG    | processors.tester:test:64 - proxy 49.89.103.241:8206 is invalid, decrease score
+2020-11-22 11:32:59.464 | INFO     | storages.Redis:decrease:73 - 202.152.51.44:8080 score decrease 1, current 9.0
+2020-11-22 11:32:59.464 | DEBUG    | processors.tester:test:64 - proxy 202.152.51.44:8080 is invalid, decrease score
+2020-11-22 11:33:12.498 | INFO     | storages.Redis:decrease:73 - 103.53.0.35:80 score decrease 1, current 9.0
+2020-11-22 11:33:12.498 | DEBUG    | processors.tester:test:64 - proxy 103.53.0.35:80 is invalid, decrease score
+2020-11-22 11:33:13.543 | INFO     | storages.Redis:decrease:73 - 60.167.159.217:8225 score decrease 1, current 9.0
+2020-11-22 11:33:13.543 | DEBUG    | processors.tester:test:64 - proxy 60.167.159.217:8225 is invalid, decrease score
+2020-11-22 11:33:13.543 | DEBUG    | processors.tester:run:78 - testing proxies use cursor 10496, count 20
+2020-11-22 11:33:13.543 | DEBUG    | processors.tester:test:41 - testing 123.55.106.239:8448
+2020-11-22 11:33:13.543 | DEBUG    | processors.tester:test:41 - testing 60.167.112.121:1133
+2020-11-22 11:33:13.543 | DEBUG    | processors.tester:test:41 - testing 124.205.155.146:8485
+2020-11-22 11:33:13.543 | DEBUG    | processors.tester:test:41 - testing 123.163.118.155:8463
+2020-11-22 11:33:13.543 | DEBUG    | processors.tester:test:41 - testing 163.204.243.70:8980
+2020-11-22 11:33:13.543 | DEBUG    | processors.tester:test:41 - testing 117.65.127.44:9999
+2020-11-22 11:33:13.543 | DEBUG    | processors.tester:test:41 - testing 123.117.33.84:9000
+2020-11-22 11:33:13.543 | DEBUG    | processors.tester:test:41 - testing 49.86.182.72:9999
+2020-11-22 11:33:13.543 | DEBUG    | processors.tester:test:41 - testing 175.42.122.206:8819
+2020-11-22 11:33:13.543 | DEBUG    | processors.tester:test:41 - testing 113.254.131.32:8080
+2020-11-22 11:33:13.543 | DEBUG    | processors.tester:test:41 - testing 27.43.191.94:9999
+2020-11-22 11:33:13.543 | DEBUG    | processors.tester:test:41 - testing 60.167.135.16:8888
+2020-11-22 11:33:13.543 | DEBUG    | processors.tester:test:41 - testing 60.176.68.111:8660
+2020-11-22 11:33:13.543 | DEBUG    | processors.tester:test:41 - testing 121.226.214.110:8902
+2020-11-22 11:33:13.543 | DEBUG    | processors.tester:test:41 - testing 123.169.112.184:9999
+2020-11-22 11:33:13.543 | DEBUG    | processors.tester:test:41 - testing 119.119.113.247:8330
+2020-11-22 11:33:13.543 | DEBUG    | processors.tester:test:41 - testing 42.238.83.222:9999
+2020-11-22 11:33:13.543 | DEBUG    | processors.tester:test:41 - testing 58.22.177.194:8983
+2020-11-22 11:33:13.543 | DEBUG    | processors.tester:test:41 - testing 183.196.170.247:8837
+2020-11-22 11:33:13.543 | DEBUG    | processors.tester:test:41 - testing 175.44.108.145:9999
+2020-11-22 11:33:13.543 | DEBUG    | processors.tester:test:41 - testing 123.163.116.47:9999
+2020-11-22 11:33:13.543 | DEBUG    | processors.tester:test:41 - testing 123.149.136.178:9999
+2020-11-22 11:33:13.543 | DEBUG    | processors.tester:test:41 - testing 183.166.102.87:9999
+2020-11-22 11:33:15.914 | INFO     | storages.Redis:decrease:73 - 124.205.155.146:8485 score decrease 1, current 9.0
+2020-11-22 11:33:15.914 | DEBUG    | processors.tester:test:64 - proxy 124.205.155.146:8485 is invalid, decrease score
+2020-11-22 11:33:15.945 | INFO     | storages.Redis:decrease:73 - 49.86.182.72:9999 score decrease 1, current 9.0
+2020-11-22 11:33:15.945 | DEBUG    | processors.tester:test:64 - proxy 49.86.182.72:9999 is invalid, decrease score
+2020-11-22 11:33:16.101 | INFO     | storages.Redis:decrease:73 - 183.196.170.247:8837 score decrease 1, current 9.0
+2020-11-22 11:33:16.101 | DEBUG    | processors.tester:test:64 - proxy 183.196.170.247:8837 is invalid, decrease score
+2020-11-22 11:33:16.117 | INFO     | storages.Redis:decrease:73 - 117.65.127.44:9999 score decrease 1, current 9.0
+2020-11-22 11:33:16.117 | DEBUG    | processors.tester:test:64 - proxy 117.65.127.44:9999 is invalid, decrease score
+2020-11-22 11:33:16.148 | INFO     | storages.Redis:decrease:73 - 121.226.214.110:8902 score decrease 1, current 9.0
+2020-11-22 11:33:16.148 | DEBUG    | processors.tester:test:64 - proxy 121.226.214.110:8902 is invalid, decrease score
+2020-11-22 11:33:35.758 | INFO     | storages.Redis:decrease:73 - 42.238.83.222:9999 score decrease 1, current 9.0
+2020-11-22 11:33:35.758 | DEBUG    | processors.tester:test:64 - proxy 42.238.83.222:9999 is invalid, decrease score
+2020-11-22 11:33:35.758 | INFO     | storages.Redis:decrease:73 - 123.169.112.184:9999 score decrease 1, current 9.0
+2020-11-22 11:33:35.758 | DEBUG    | processors.tester:test:64 - proxy 123.169.112.184:9999 is invalid, decrease score
+2020-11-22 11:33:35.758 | INFO     | storages.Redis:decrease:73 - 163.204.243.70:8980 score decrease 1, current 9.0
+2020-11-22 11:33:35.758 | DEBUG    | processors.tester:test:64 - proxy 163.204.243.70:8980 is invalid, decrease score
+2020-11-22 11:33:35.758 | INFO     | storages.Redis:decrease:73 - 58.22.177.194:8983 score decrease 1, current 9.0
+2020-11-22 11:33:35.758 | DEBUG    | processors.tester:test:64 - proxy 58.22.177.194:8983 is invalid, decrease score
+2020-11-22 11:33:35.789 | INFO     | storages.Redis:decrease:73 - 60.167.112.121:1133 score decrease 1, current 9.0
+2020-11-22 11:33:35.789 | DEBUG    | processors.tester:test:64 - proxy 60.167.112.121:1133 is invalid, decrease score
+2020-11-22 11:33:35.821 | INFO     | storages.Redis:decrease:73 - 123.163.116.47:9999 score decrease 1, current 8.0
+2020-11-22 11:33:35.821 | DEBUG    | processors.tester:test:64 - proxy 123.163.116.47:9999 is invalid, decrease score
+2020-11-22 11:33:35.821 | INFO     | storages.Redis:decrease:73 - 123.163.118.155:8463 score decrease 1, current 9.0
+2020-11-22 11:33:35.821 | DEBUG    | processors.tester:test:64 - proxy 123.163.118.155:8463 is invalid, decrease score
+2020-11-22 11:33:35.821 | INFO     | storages.Redis:decrease:73 - 119.119.113.247:8330 score decrease 1, current 9.0
+2020-11-22 11:33:35.821 | DEBUG    | processors.tester:test:64 - proxy 119.119.113.247:8330 is invalid, decrease score
+2020-11-22 11:33:35.821 | INFO     | storages.Redis:decrease:73 - 123.55.106.239:8448 score decrease 1, current 9.0
+2020-11-22 11:33:35.821 | DEBUG    | processors.tester:test:64 - proxy 123.55.106.239:8448 is invalid, decrease score
+2020-11-22 11:33:35.821 | INFO     | storages.Redis:decrease:73 - 175.44.108.145:9999 score decrease 1, current 9.0
+2020-11-22 11:33:35.821 | DEBUG    | processors.tester:test:64 - proxy 175.44.108.145:9999 is invalid, decrease score
+2020-11-22 11:33:35.867 | INFO     | storages.Redis:decrease:73 - 60.167.135.16:8888 score decrease 1, current 9.0
+2020-11-22 11:33:35.867 | DEBUG    | processors.tester:test:64 - proxy 60.167.135.16:8888 is invalid, decrease score
+2020-11-22 11:33:35.899 | INFO     | storages.Redis:decrease:73 - 123.117.33.84:9000 score decrease 1, current 9.0
+2020-11-22 11:33:35.899 | DEBUG    | processors.tester:test:64 - proxy 123.117.33.84:9000 is invalid, decrease score
+2020-11-22 11:33:35.899 | INFO     | storages.Redis:decrease:73 - 60.176.68.111:8660 score decrease 1, current 9.0
+2020-11-22 11:33:35.899 | DEBUG    | processors.tester:test:64 - proxy 60.176.68.111:8660 is invalid, decrease score
+2020-11-22 11:33:35.899 | INFO     | storages.Redis:decrease:73 - 123.149.136.178:9999 score decrease 1, current 9.0
+2020-11-22 11:33:35.899 | DEBUG    | processors.tester:test:64 - proxy 123.149.136.178:9999 is invalid, decrease score
+2020-11-22 11:33:35.899 | INFO     | storages.Redis:decrease:73 - 175.42.122.206:8819 score decrease 1, current 9.0
+2020-11-22 11:33:35.899 | DEBUG    | processors.tester:test:64 - proxy 175.42.122.206:8819 is invalid, decrease score
+2020-11-22 11:33:35.914 | INFO     | storages.Redis:decrease:73 - 183.166.102.87:9999 score decrease 1, current 9.0
+2020-11-22 11:33:35.914 | DEBUG    | processors.tester:test:64 - proxy 183.166.102.87:9999 is invalid, decrease score
+2020-11-22 11:33:36.211 | INFO     | storages.Redis:decrease:73 - 27.43.191.94:9999 score decrease 1, current 9.0
+2020-11-22 11:33:36.211 | DEBUG    | processors.tester:test:64 - proxy 27.43.191.94:9999 is invalid, decrease score
+2020-11-22 11:34:25.246 | DEBUG    | __mp_main__:run_getter:48 - getter loop 1 start...
+2020-11-22 11:34:25.246 | INFO     | processors.getter:run:36 - crawler Daili66Crawler to get proxy
+2020-11-22 11:34:25.246 | INFO     | base:crawl:27 - fetching http://www.66ip.cn/1.html
+2020-11-22 11:34:25.448 | INFO     | base:crawl:27 - fetching http://www.66ip.cn/2.html
+2020-11-22 11:34:25.916 | INFO     | base:crawl:27 - fetching http://www.66ip.cn/3.html
+2020-11-22 11:34:26.556 | INFO     | base:crawl:27 - fetching http://www.66ip.cn/4.html
+2020-11-22 11:34:27.118 | INFO     | base:crawl:27 - fetching http://www.66ip.cn/5.html
+2020-11-22 11:34:27.742 | INFO     | processors.getter:run:36 - crawler Data5UCrawler to get proxy
+2020-11-22 11:34:27.742 | INFO     | base:crawl:27 - fetching http://www.data5u.com
+2020-11-22 11:34:28.756 | INFO     | base:crawl:30 - fetched proxy 27.206.180.12:9013 from http://www.data5u.com
+2020-11-22 11:34:28.756 | INFO     | processors.getter:run:39 - Data5UCrawler:27.206.180.12:9013 already added
+2020-11-22 11:34:28.756 | INFO     | base:crawl:30 - fetched proxy 115.221.246.188:8727 from http://www.data5u.com
+2020-11-22 11:34:28.756 | INFO     | processors.getter:run:39 - Data5UCrawler:115.221.246.188:8727 already added
+2020-11-22 11:34:28.756 | INFO     | base:crawl:30 - fetched proxy 120.78.179.136:8115 from http://www.data5u.com
+2020-11-22 11:34:28.756 | INFO     | processors.getter:run:39 - Data5UCrawler:120.78.179.136:8115 already added
+2020-11-22 11:34:28.756 | INFO     | base:crawl:30 - fetched proxy 49.89.103.147:8375 from http://www.data5u.com
+2020-11-22 11:34:28.756 | INFO     | processors.getter:run:39 - Data5UCrawler:49.89.103.147:8375 already added
+2020-11-22 11:34:28.771 | INFO     | base:crawl:30 - fetched proxy 49.70.89.179:8158 from http://www.data5u.com
+2020-11-22 11:34:28.771 | INFO     | processors.getter:run:39 - Data5UCrawler:49.70.89.179:8158 already added
+2020-11-22 11:34:28.771 | INFO     | base:crawl:30 - fetched proxy 223.150.11.158:8517 from http://www.data5u.com
+2020-11-22 11:34:28.771 | INFO     | processors.getter:run:39 - Data5UCrawler:223.150.11.158:8517 already added
+2020-11-22 11:34:28.771 | INFO     | base:crawl:30 - fetched proxy 115.218.6.66:8469 from http://www.data5u.com
+2020-11-22 11:34:28.771 | INFO     | processors.getter:run:39 - Data5UCrawler:115.218.6.66:8469 already added
+2020-11-22 11:34:28.771 | INFO     | base:crawl:30 - fetched proxy 58.220.95.30:8948 from http://www.data5u.com
+2020-11-22 11:34:28.771 | INFO     | processors.getter:run:39 - Data5UCrawler:58.220.95.30:8948 already added
+2020-11-22 11:34:28.771 | INFO     | base:crawl:30 - fetched proxy 123.163.117.57:8496 from http://www.data5u.com
+2020-11-22 11:34:28.771 | INFO     | processors.getter:run:39 - Data5UCrawler:123.163.117.57:8496 already added
+2020-11-22 11:34:28.771 | INFO     | base:crawl:30 - fetched proxy 121.226.215.27:8521 from http://www.data5u.com
+2020-11-22 11:34:28.771 | INFO     | processors.getter:run:39 - Data5UCrawler:121.226.215.27:8521 already added
+2020-11-22 11:34:28.771 | INFO     | base:crawl:30 - fetched proxy 123.160.1.228:8104 from http://www.data5u.com
+2020-11-22 11:34:28.771 | INFO     | processors.getter:run:39 - Data5UCrawler:123.160.1.228:8104 already added
+2020-11-22 11:34:28.771 | INFO     | base:crawl:30 - fetched proxy 123.55.102.220:8373 from http://www.data5u.com
+2020-11-22 11:34:28.771 | INFO     | processors.getter:run:39 - Data5UCrawler:123.55.102.220:8373 already added
+2020-11-22 11:34:28.771 | INFO     | base:crawl:30 - fetched proxy 222.94.196.138:8962 from http://www.data5u.com
+2020-11-22 11:34:28.771 | INFO     | processors.getter:run:39 - Data5UCrawler:222.94.196.138:8962 already added
+2020-11-22 11:34:28.771 | INFO     | base:crawl:30 - fetched proxy 123.149.137.232:8570 from http://www.data5u.com
+2020-11-22 11:34:28.771 | INFO     | processors.getter:run:39 - Data5UCrawler:123.149.137.232:8570 already added
+2020-11-22 11:34:28.771 | INFO     | base:crawl:30 - fetched proxy 175.43.56.24:8269 from http://www.data5u.com
+2020-11-22 11:34:28.771 | INFO     | processors.getter:run:39 - Data5UCrawler:175.43.56.24:8269 already added
+2020-11-22 11:34:28.771 | INFO     | base:crawl:30 - fetched proxy 123.163.117.62:8554 from http://www.data5u.com
+2020-11-22 11:34:28.787 | INFO     | processors.getter:run:39 - Data5UCrawler:123.163.117.62:8554 already added
+2020-11-22 11:34:28.787 | INFO     | base:crawl:30 - fetched proxy 175.44.109.211:8473 from http://www.data5u.com
+2020-11-22 11:34:28.787 | INFO     | processors.getter:run:39 - Data5UCrawler:175.44.109.211:8473 already added
+2020-11-22 11:34:28.787 | INFO     | base:crawl:30 - fetched proxy 27.214.48.225:8610 from http://www.data5u.com
+2020-11-22 11:34:28.787 | INFO     | processors.getter:run:39 - Data5UCrawler:27.214.48.225:8610 already added
+2020-11-22 11:34:28.787 | INFO     | base:crawl:30 - fetched proxy 49.89.67.99:8755 from http://www.data5u.com
+2020-11-22 11:34:28.787 | INFO     | processors.getter:run:39 - Data5UCrawler:49.89.67.99:8755 already added
+2020-11-22 11:34:28.787 | INFO     | base:crawl:30 - fetched proxy 27.220.51.78:9071 from http://www.data5u.com
+2020-11-22 11:34:28.787 | INFO     | processors.getter:run:39 - Data5UCrawler:27.220.51.78:9071 already added
+2020-11-22 11:34:28.787 | INFO     | processors.getter:run:36 - crawler IP3366Crawler to get proxy
+2020-11-22 11:34:28.787 | INFO     | base:crawl:27 - fetching http://www.ip3366.net/free/?stype=1&page=1
+2020-11-22 11:34:29.848 | INFO     | base:crawl:30 - fetched proxy 49.87.202.54:9999 from http://www.ip3366.net/free/?stype=1&page=1
+2020-11-22 11:34:29.848 | INFO     | processors.getter:run:39 - IP3366Crawler:49.87.202.54:9999 already added
+2020-11-22 11:34:29.848 | INFO     | base:crawl:30 - fetched proxy 49.89.84.145:9999 from http://www.ip3366.net/free/?stype=1&page=1
+2020-11-22 11:34:29.848 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.84.145:9999 already added
+2020-11-22 11:34:29.848 | INFO     | base:crawl:30 - fetched proxy 49.89.84.64:9999 from http://www.ip3366.net/free/?stype=1&page=1
+2020-11-22 11:34:29.848 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.84.64:9999 already added
+2020-11-22 11:34:29.848 | INFO     | base:crawl:30 - fetched proxy 59.62.28.175:9000 from http://www.ip3366.net/free/?stype=1&page=1
+2020-11-22 11:34:29.848 | INFO     | processors.getter:run:39 - IP3366Crawler:59.62.28.175:9000 already added
+2020-11-22 11:34:29.848 | INFO     | base:crawl:30 - fetched proxy 49.89.86.116:9999 from http://www.ip3366.net/free/?stype=1&page=1
+2020-11-22 11:34:29.848 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.86.116:9999 already added
+2020-11-22 11:34:29.848 | INFO     | base:crawl:30 - fetched proxy 60.186.43.152:9000 from http://www.ip3366.net/free/?stype=1&page=1
+2020-11-22 11:34:29.848 | INFO     | processors.getter:run:39 - IP3366Crawler:60.186.43.152:9000 already added
+2020-11-22 11:34:29.848 | INFO     | base:crawl:30 - fetched proxy 49.89.67.82:9999 from http://www.ip3366.net/free/?stype=1&page=1
+2020-11-22 11:34:29.848 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.67.82:9999 already added
+2020-11-22 11:34:29.848 | INFO     | base:crawl:30 - fetched proxy 49.70.99.162:9999 from http://www.ip3366.net/free/?stype=1&page=1
+2020-11-22 11:34:29.848 | INFO     | processors.getter:run:39 - IP3366Crawler:49.70.99.162:9999 already added
+2020-11-22 11:34:29.848 | INFO     | base:crawl:30 - fetched proxy 60.210.136.47:9000 from http://www.ip3366.net/free/?stype=1&page=1
+2020-11-22 11:34:29.848 | INFO     | processors.getter:run:39 - IP3366Crawler:60.210.136.47:9000 already added
+2020-11-22 11:34:29.848 | INFO     | base:crawl:30 - fetched proxy 49.86.183.77:9999 from http://www.ip3366.net/free/?stype=1&page=1
+2020-11-22 11:34:29.848 | INFO     | processors.getter:run:39 - IP3366Crawler:49.86.183.77:9999 already added
+2020-11-22 11:34:29.848 | INFO     | base:crawl:30 - fetched proxy 49.89.84.240:9999 from http://www.ip3366.net/free/?stype=1&page=1
+2020-11-22 11:34:29.848 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.84.240:9999 already added
+2020-11-22 11:34:29.848 | INFO     | base:crawl:30 - fetched proxy 60.182.166.95:9999 from http://www.ip3366.net/free/?stype=1&page=1
+2020-11-22 11:34:29.848 | INFO     | processors.getter:run:39 - IP3366Crawler:60.182.166.95:9999 already added
+2020-11-22 11:34:29.863 | INFO     | base:crawl:30 - fetched proxy 49.70.95.226:9999 from http://www.ip3366.net/free/?stype=1&page=1
+2020-11-22 11:34:29.863 | INFO     | processors.getter:run:39 - IP3366Crawler:49.70.95.226:9999 already added
+2020-11-22 11:34:29.863 | INFO     | base:crawl:30 - fetched proxy 49.86.24.185:9999 from http://www.ip3366.net/free/?stype=1&page=1
+2020-11-22 11:34:29.863 | INFO     | processors.getter:run:39 - IP3366Crawler:49.86.24.185:9999 already added
+2020-11-22 11:34:29.863 | INFO     | base:crawl:30 - fetched proxy 49.89.85.213:9999 from http://www.ip3366.net/free/?stype=1&page=1
+2020-11-22 11:34:29.863 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.85.213:9999 already added
+2020-11-22 11:34:29.863 | INFO     | base:crawl:27 - fetching http://www.ip3366.net/free/?stype=1&page=2
+2020-11-22 11:34:30.238 | INFO     | base:crawl:30 - fetched proxy 49.89.67.12:9999 from http://www.ip3366.net/free/?stype=1&page=2
+2020-11-22 11:34:30.238 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.67.12:9999 already added
+2020-11-22 11:34:30.238 | INFO     | base:crawl:30 - fetched proxy 49.86.59.37:9999 from http://www.ip3366.net/free/?stype=1&page=2
+2020-11-22 11:34:30.238 | INFO     | processors.getter:run:39 - IP3366Crawler:49.86.59.37:9999 already added
+2020-11-22 11:34:30.238 | INFO     | base:crawl:30 - fetched proxy 49.70.99.9:9999 from http://www.ip3366.net/free/?stype=1&page=2
+2020-11-22 11:34:30.253 | INFO     | processors.getter:run:39 - IP3366Crawler:49.70.99.9:9999 already added
+2020-11-22 11:34:30.253 | INFO     | base:crawl:30 - fetched proxy 49.70.95.67:9999 from http://www.ip3366.net/free/?stype=1&page=2
+2020-11-22 11:34:30.253 | INFO     | processors.getter:run:39 - IP3366Crawler:49.70.95.67:9999 already added
+2020-11-22 11:34:30.253 | INFO     | base:crawl:30 - fetched proxy 49.87.246.243:9999 from http://www.ip3366.net/free/?stype=1&page=2
+2020-11-22 11:34:30.253 | INFO     | processors.getter:run:39 - IP3366Crawler:49.87.246.243:9999 already added
+2020-11-22 11:34:30.253 | INFO     | base:crawl:30 - fetched proxy 49.86.58.16:9999 from http://www.ip3366.net/free/?stype=1&page=2
+2020-11-22 11:34:30.253 | INFO     | processors.getter:run:39 - IP3366Crawler:49.86.58.16:9999 already added
+2020-11-22 11:34:30.253 | INFO     | base:crawl:30 - fetched proxy 49.86.58.16:9999 from http://www.ip3366.net/free/?stype=1&page=2
+2020-11-22 11:34:30.253 | INFO     | processors.getter:run:39 - IP3366Crawler:49.86.58.16:9999 already added
+2020-11-22 11:34:30.253 | INFO     | base:crawl:30 - fetched proxy 49.86.56.118:9999 from http://www.ip3366.net/free/?stype=1&page=2
+2020-11-22 11:34:30.253 | INFO     | processors.getter:run:39 - IP3366Crawler:49.86.56.118:9999 already added
+2020-11-22 11:34:30.253 | INFO     | base:crawl:30 - fetched proxy 49.70.99.205:9999 from http://www.ip3366.net/free/?stype=1&page=2
+2020-11-22 11:34:30.253 | INFO     | processors.getter:run:39 - IP3366Crawler:49.70.99.205:9999 already added
+2020-11-22 11:34:30.253 | INFO     | base:crawl:30 - fetched proxy 49.89.84.214:9999 from http://www.ip3366.net/free/?stype=1&page=2
+2020-11-22 11:34:30.253 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.84.214:9999 already added
+2020-11-22 11:34:30.253 | INFO     | base:crawl:30 - fetched proxy 49.89.85.245:9999 from http://www.ip3366.net/free/?stype=1&page=2
+2020-11-22 11:34:30.253 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.85.245:9999 already added
+2020-11-22 11:34:30.253 | INFO     | base:crawl:30 - fetched proxy 49.89.103.41:9999 from http://www.ip3366.net/free/?stype=1&page=2
+2020-11-22 11:34:30.253 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.103.41:9999 already added
+2020-11-22 11:34:30.253 | INFO     | base:crawl:30 - fetched proxy 49.89.87.33:9999 from http://www.ip3366.net/free/?stype=1&page=2
+2020-11-22 11:34:30.253 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.87.33:9999 already added
+2020-11-22 11:34:30.253 | INFO     | base:crawl:30 - fetched proxy 49.89.85.200:9999 from http://www.ip3366.net/free/?stype=1&page=2
+2020-11-22 11:34:30.253 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.85.200:9999 already added
+2020-11-22 11:34:30.253 | INFO     | base:crawl:30 - fetched proxy 49.89.103.45:9999 from http://www.ip3366.net/free/?stype=1&page=2
+2020-11-22 11:34:30.269 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.103.45:9999 already added
+2020-11-22 11:34:30.269 | INFO     | base:crawl:27 - fetching http://www.ip3366.net/free/?stype=1&page=3
+2020-11-22 11:34:30.596 | INFO     | base:crawl:30 - fetched proxy 49.89.85.172:9999 from http://www.ip3366.net/free/?stype=1&page=3
+2020-11-22 11:34:30.596 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.85.172:9999 already added
+2020-11-22 11:34:30.596 | INFO     | base:crawl:30 - fetched proxy 49.89.84.135:9999 from http://www.ip3366.net/free/?stype=1&page=3
+2020-11-22 11:34:30.596 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.84.135:9999 already added
+2020-11-22 11:34:30.596 | INFO     | base:crawl:30 - fetched proxy 60.167.112.121:1133 from http://www.ip3366.net/free/?stype=1&page=3
+2020-11-22 11:34:30.596 | INFO     | processors.getter:run:39 - IP3366Crawler:60.167.112.121:1133 already added
+2020-11-22 11:34:30.596 | INFO     | base:crawl:30 - fetched proxy 60.210.132.25:9000 from http://www.ip3366.net/free/?stype=1&page=3
+2020-11-22 11:34:30.596 | INFO     | processors.getter:run:39 - IP3366Crawler:60.210.132.25:9000 already added
+2020-11-22 11:34:30.596 | INFO     | base:crawl:30 - fetched proxy 60.210.133.224:9000 from http://www.ip3366.net/free/?stype=1&page=3
+2020-11-22 11:34:30.596 | INFO     | processors.getter:run:39 - IP3366Crawler:60.210.133.224:9000 already added
+2020-11-22 11:34:30.596 | INFO     | base:crawl:30 - fetched proxy 49.89.87.152:9999 from http://www.ip3366.net/free/?stype=1&page=3
+2020-11-22 11:34:30.596 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.87.152:9999 already added
+2020-11-22 11:34:30.596 | INFO     | base:crawl:30 - fetched proxy 39.81.146.58:9000 from http://www.ip3366.net/free/?stype=1&page=3
+2020-11-22 11:34:30.596 | INFO     | processors.getter:run:39 - IP3366Crawler:39.81.146.58:9000 already added
+2020-11-22 11:34:30.596 | INFO     | base:crawl:30 - fetched proxy 60.168.207.82:1133 from http://www.ip3366.net/free/?stype=1&page=3
+2020-11-22 11:34:30.596 | INFO     | processors.getter:run:39 - IP3366Crawler:60.168.207.82:1133 already added
+2020-11-22 11:34:30.596 | INFO     | base:crawl:30 - fetched proxy 27.206.74.41:9000 from http://www.ip3366.net/free/?stype=1&page=3
+2020-11-22 11:34:30.596 | INFO     | processors.getter:run:39 - IP3366Crawler:27.206.74.41:9000 already added
+2020-11-22 11:34:30.596 | INFO     | base:crawl:30 - fetched proxy 27.220.122.198:9000 from http://www.ip3366.net/free/?stype=1&page=3
+2020-11-22 11:34:30.596 | INFO     | processors.getter:run:39 - IP3366Crawler:27.220.122.198:9000 already added
+2020-11-22 11:34:30.596 | INFO     | base:crawl:30 - fetched proxy 27.220.54.57:9000 from http://www.ip3366.net/free/?stype=1&page=3
+2020-11-22 11:34:30.596 | INFO     | processors.getter:run:39 - IP3366Crawler:27.220.54.57:9000 already added
+2020-11-22 11:34:30.596 | INFO     | base:crawl:30 - fetched proxy 39.81.146.136:9000 from http://www.ip3366.net/free/?stype=1&page=3
+2020-11-22 11:34:30.596 | INFO     | processors.getter:run:39 - IP3366Crawler:39.81.146.136:9000 already added
+2020-11-22 11:34:30.612 | INFO     | base:crawl:30 - fetched proxy 27.220.50.192:9000 from http://www.ip3366.net/free/?stype=1&page=3
+2020-11-22 11:34:30.612 | INFO     | processors.getter:run:39 - IP3366Crawler:27.220.50.192:9000 already added
+2020-11-22 11:34:30.612 | INFO     | base:crawl:30 - fetched proxy 27.206.74.7:9000 from http://www.ip3366.net/free/?stype=1&page=3
+2020-11-22 11:34:30.612 | INFO     | processors.getter:run:39 - IP3366Crawler:27.206.74.7:9000 already added
+2020-11-22 11:34:30.612 | INFO     | base:crawl:30 - fetched proxy 27.220.53.230:9000 from http://www.ip3366.net/free/?stype=1&page=3
+2020-11-22 11:34:30.612 | INFO     | processors.getter:run:39 - IP3366Crawler:27.220.53.230:9000 already added
+2020-11-22 11:34:30.612 | INFO     | base:crawl:27 - fetching http://www.ip3366.net/free/?stype=1&page=4
+2020-11-22 11:34:31.002 | INFO     | base:crawl:30 - fetched proxy 27.214.115.17:9000 from http://www.ip3366.net/free/?stype=1&page=4
+2020-11-22 11:34:31.002 | INFO     | processors.getter:run:39 - IP3366Crawler:27.214.115.17:9000 already added
+2020-11-22 11:34:31.002 | INFO     | base:crawl:30 - fetched proxy 27.220.122.51:9000 from http://www.ip3366.net/free/?stype=1&page=4
+2020-11-22 11:34:31.002 | INFO     | processors.getter:run:39 - IP3366Crawler:27.220.122.51:9000 already added
+2020-11-22 11:34:31.002 | INFO     | base:crawl:30 - fetched proxy 60.167.134.191:1133 from http://www.ip3366.net/free/?stype=1&page=4
+2020-11-22 11:34:31.002 | INFO     | processors.getter:run:39 - IP3366Crawler:60.167.134.191:1133 already added
+2020-11-22 11:34:31.002 | INFO     | base:crawl:30 - fetched proxy 27.206.78.190:9000 from http://www.ip3366.net/free/?stype=1&page=4
+2020-11-22 11:34:31.002 | INFO     | processors.getter:run:39 - IP3366Crawler:27.206.78.190:9000 already added
+2020-11-22 11:34:31.002 | INFO     | base:crawl:30 - fetched proxy 39.81.144.28:9000 from http://www.ip3366.net/free/?stype=1&page=4
+2020-11-22 11:34:31.002 | INFO     | processors.getter:run:39 - IP3366Crawler:39.81.144.28:9000 already added
+2020-11-22 11:34:31.002 | INFO     | base:crawl:30 - fetched proxy 27.220.126.175:9000 from http://www.ip3366.net/free/?stype=1&page=4
+2020-11-22 11:34:31.002 | INFO     | processors.getter:run:39 - IP3366Crawler:27.220.126.175:9000 already added
+2020-11-22 11:34:31.002 | INFO     | base:crawl:30 - fetched proxy 27.192.172.41:9000 from http://www.ip3366.net/free/?stype=1&page=4
+2020-11-22 11:34:31.002 | INFO     | processors.getter:run:39 - IP3366Crawler:27.192.172.41:9000 already added
+2020-11-22 11:34:31.002 | INFO     | base:crawl:30 - fetched proxy 27.206.76.14:9000 from http://www.ip3366.net/free/?stype=1&page=4
+2020-11-22 11:34:31.002 | INFO     | processors.getter:run:39 - IP3366Crawler:27.206.76.14:9000 already added
+2020-11-22 11:34:31.002 | INFO     | base:crawl:30 - fetched proxy 27.206.73.66:9000 from http://www.ip3366.net/free/?stype=1&page=4
+2020-11-22 11:34:31.018 | INFO     | processors.getter:run:39 - IP3366Crawler:27.206.73.66:9000 already added
+2020-11-22 11:34:31.018 | INFO     | base:crawl:30 - fetched proxy 27.192.168.190:9000 from http://www.ip3366.net/free/?stype=1&page=4
+2020-11-22 11:34:31.018 | INFO     | processors.getter:run:39 - IP3366Crawler:27.192.168.190:9000 already added
+2020-11-22 11:34:31.018 | INFO     | base:crawl:30 - fetched proxy 27.206.75.183:9000 from http://www.ip3366.net/free/?stype=1&page=4
+2020-11-22 11:34:31.018 | INFO     | processors.getter:run:39 - IP3366Crawler:27.206.75.183:9000 already added
+2020-11-22 11:34:31.018 | INFO     | base:crawl:30 - fetched proxy 27.220.165.255:9000 from http://www.ip3366.net/free/?stype=1&page=4
+2020-11-22 11:34:31.018 | INFO     | processors.getter:run:39 - IP3366Crawler:27.220.165.255:9000 already added
+2020-11-22 11:34:31.018 | INFO     | base:crawl:30 - fetched proxy 27.192.170.85:9000 from http://www.ip3366.net/free/?stype=1&page=4
+2020-11-22 11:34:31.018 | INFO     | processors.getter:run:39 - IP3366Crawler:27.192.170.85:9000 already added
+2020-11-22 11:34:31.018 | INFO     | base:crawl:30 - fetched proxy 27.220.51.217:9000 from http://www.ip3366.net/free/?stype=1&page=4
+2020-11-22 11:34:31.018 | INFO     | processors.getter:run:39 - IP3366Crawler:27.220.51.217:9000 already added
+2020-11-22 11:34:31.018 | INFO     | base:crawl:30 - fetched proxy 27.206.177.155:9000 from http://www.ip3366.net/free/?stype=1&page=4
+2020-11-22 11:34:31.018 | INFO     | processors.getter:run:39 - IP3366Crawler:27.206.177.155:9000 already added
+2020-11-22 11:34:31.018 | INFO     | base:crawl:27 - fetching http://www.ip3366.net/free/?stype=1&page=5
+2020-11-22 11:34:31.361 | INFO     | base:crawl:30 - fetched proxy 27.220.121.167:9000 from http://www.ip3366.net/free/?stype=1&page=5
+2020-11-22 11:34:31.361 | INFO     | processors.getter:run:39 - IP3366Crawler:27.220.121.167:9000 already added
+2020-11-22 11:34:31.361 | INFO     | base:crawl:30 - fetched proxy 39.81.61.65:9000 from http://www.ip3366.net/free/?stype=1&page=5
+2020-11-22 11:34:31.361 | INFO     | processors.getter:run:39 - IP3366Crawler:39.81.61.65:9000 already added
+2020-11-22 11:34:31.361 | INFO     | base:crawl:30 - fetched proxy 27.206.177.185:9000 from http://www.ip3366.net/free/?stype=1&page=5
+2020-11-22 11:34:31.361 | INFO     | processors.getter:run:39 - IP3366Crawler:27.206.177.185:9000 already added
+2020-11-22 11:34:31.361 | INFO     | base:crawl:30 - fetched proxy 49.89.84.203:9999 from http://www.ip3366.net/free/?stype=1&page=5
+2020-11-22 11:34:31.361 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.84.203:9999 already added
+2020-11-22 11:34:31.361 | INFO     | base:crawl:30 - fetched proxy 27.206.78.156:9000 from http://www.ip3366.net/free/?stype=1&page=5
+2020-11-22 11:34:31.361 | INFO     | processors.getter:run:39 - IP3366Crawler:27.206.78.156:9000 already added
+2020-11-22 11:34:31.361 | INFO     | base:crawl:30 - fetched proxy 49.70.33.138:9999 from http://www.ip3366.net/free/?stype=1&page=5
+2020-11-22 11:34:31.361 | INFO     | processors.getter:run:39 - IP3366Crawler:49.70.33.138:9999 already added
+2020-11-22 11:34:31.361 | INFO     | base:crawl:30 - fetched proxy 42.238.83.38:9999 from http://www.ip3366.net/free/?stype=1&page=5
+2020-11-22 11:34:31.361 | INFO     | processors.getter:run:39 - IP3366Crawler:42.238.83.38:9999 already added
+2020-11-22 11:34:31.361 | INFO     | base:crawl:30 - fetched proxy 27.205.41.40:9000 from http://www.ip3366.net/free/?stype=1&page=5
+2020-11-22 11:34:31.361 | INFO     | processors.getter:run:39 - IP3366Crawler:27.205.41.40:9000 already added
+2020-11-22 11:34:31.361 | INFO     | base:crawl:30 - fetched proxy 27.192.201.172:9000 from http://www.ip3366.net/free/?stype=1&page=5
+2020-11-22 11:34:31.361 | INFO     | processors.getter:run:39 - IP3366Crawler:27.192.201.172:9000 already added
+2020-11-22 11:34:31.361 | INFO     | base:crawl:30 - fetched proxy 27.206.74.66:9000 from http://www.ip3366.net/free/?stype=1&page=5
+2020-11-22 11:34:31.361 | INFO     | processors.getter:run:39 - IP3366Crawler:27.206.74.66:9000 already added
+2020-11-22 11:34:31.361 | INFO     | base:crawl:30 - fetched proxy 49.89.67.116:9999 from http://www.ip3366.net/free/?stype=1&page=5
+2020-11-22 11:34:31.361 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.67.116:9999 already added
+2020-11-22 11:34:31.361 | INFO     | base:crawl:30 - fetched proxy 49.70.33.234:9999 from http://www.ip3366.net/free/?stype=1&page=5
+2020-11-22 11:34:31.361 | INFO     | processors.getter:run:39 - IP3366Crawler:49.70.33.234:9999 already added
+2020-11-22 11:34:31.376 | INFO     | base:crawl:30 - fetched proxy 27.220.48.32:9000 from http://www.ip3366.net/free/?stype=1&page=5
+2020-11-22 11:34:31.376 | INFO     | processors.getter:run:39 - IP3366Crawler:27.220.48.32:9000 already added
+2020-11-22 11:34:31.376 | INFO     | base:crawl:30 - fetched proxy 27.192.175.143:9000 from http://www.ip3366.net/free/?stype=1&page=5
+2020-11-22 11:34:31.376 | INFO     | processors.getter:run:39 - IP3366Crawler:27.192.175.143:9000 already added
+2020-11-22 11:34:31.376 | INFO     | base:crawl:30 - fetched proxy 49.70.99.60:9999 from http://www.ip3366.net/free/?stype=1&page=5
+2020-11-22 11:34:31.376 | INFO     | processors.getter:run:39 - IP3366Crawler:49.70.99.60:9999 already added
+2020-11-22 11:34:31.376 | INFO     | base:crawl:27 - fetching http://www.ip3366.net/free/?stype=1&page=6
+2020-11-22 11:34:31.688 | INFO     | base:crawl:30 - fetched proxy 27.214.48.225:9000 from http://www.ip3366.net/free/?stype=1&page=6
+2020-11-22 11:34:31.688 | INFO     | processors.getter:run:39 - IP3366Crawler:27.214.48.225:9000 already added
+2020-11-22 11:34:31.688 | INFO     | base:crawl:30 - fetched proxy 27.214.49.78:9000 from http://www.ip3366.net/free/?stype=1&page=6
+2020-11-22 11:34:31.688 | INFO     | processors.getter:run:39 - IP3366Crawler:27.214.49.78:9000 already added
+2020-11-22 11:34:31.688 | INFO     | base:crawl:30 - fetched proxy 49.89.67.99:9999 from http://www.ip3366.net/free/?stype=1&page=6
+2020-11-22 11:34:31.688 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.67.99:9999 already added
+2020-11-22 11:34:31.688 | INFO     | base:crawl:30 - fetched proxy 27.220.51.78:9000 from http://www.ip3366.net/free/?stype=1&page=6
+2020-11-22 11:34:31.688 | INFO     | processors.getter:run:39 - IP3366Crawler:27.220.51.78:9000 already added
+2020-11-22 11:34:31.688 | INFO     | base:crawl:30 - fetched proxy 49.70.32.218:9999 from http://www.ip3366.net/free/?stype=1&page=6
+2020-11-22 11:34:31.688 | INFO     | processors.getter:run:39 - IP3366Crawler:49.70.32.218:9999 already added
+2020-11-22 11:34:31.688 | INFO     | base:crawl:30 - fetched proxy 49.86.27.246:9999 from http://www.ip3366.net/free/?stype=1&page=6
+2020-11-22 11:34:31.704 | INFO     | processors.getter:run:39 - IP3366Crawler:49.86.27.246:9999 already added
+2020-11-22 11:34:31.704 | INFO     | base:crawl:30 - fetched proxy 49.89.103.147:9999 from http://www.ip3366.net/free/?stype=1&page=6
+2020-11-22 11:34:31.704 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.103.147:9999 already added
+2020-11-22 11:34:31.704 | INFO     | base:crawl:30 - fetched proxy 49.70.89.179:9999 from http://www.ip3366.net/free/?stype=1&page=6
+2020-11-22 11:34:31.704 | INFO     | processors.getter:run:39 - IP3366Crawler:49.70.89.179:9999 already added
+2020-11-22 11:34:31.704 | INFO     | base:crawl:30 - fetched proxy 27.220.55.49:9000 from http://www.ip3366.net/free/?stype=1&page=6
+2020-11-22 11:34:31.704 | INFO     | processors.getter:run:39 - IP3366Crawler:27.220.55.49:9000 already added
+2020-11-22 11:34:31.704 | INFO     | base:crawl:30 - fetched proxy 49.70.32.128:9999 from http://www.ip3366.net/free/?stype=1&page=6
+2020-11-22 11:34:31.704 | INFO     | processors.getter:run:39 - IP3366Crawler:49.70.32.128:9999 already added
+2020-11-22 11:34:31.704 | INFO     | base:crawl:30 - fetched proxy 60.210.128.123:9000 from http://www.ip3366.net/free/?stype=1&page=6
+2020-11-22 11:34:31.704 | INFO     | processors.getter:run:39 - IP3366Crawler:60.210.128.123:9000 already added
+2020-11-22 11:34:31.704 | INFO     | base:crawl:30 - fetched proxy 27.206.180.12:9000 from http://www.ip3366.net/free/?stype=1&page=6
+2020-11-22 11:34:31.704 | INFO     | processors.getter:run:39 - IP3366Crawler:27.206.180.12:9000 already added
+2020-11-22 11:34:31.704 | INFO     | base:crawl:30 - fetched proxy 49.70.17.122:9999 from http://www.ip3366.net/free/?stype=1&page=6
+2020-11-22 11:34:31.704 | INFO     | processors.getter:run:39 - IP3366Crawler:49.70.17.122:9999 already added
+2020-11-22 11:34:31.704 | INFO     | base:crawl:30 - fetched proxy 49.70.33.231:9999 from http://www.ip3366.net/free/?stype=1&page=6
+2020-11-22 11:34:31.704 | INFO     | processors.getter:run:39 - IP3366Crawler:49.70.33.231:9999 already added
+2020-11-22 11:34:31.704 | INFO     | base:crawl:30 - fetched proxy 27.220.161.26:9000 from http://www.ip3366.net/free/?stype=1&page=6
+2020-11-22 11:34:31.704 | INFO     | processors.getter:run:39 - IP3366Crawler:27.220.161.26:9000 already added
+2020-11-22 11:34:31.704 | INFO     | base:crawl:27 - fetching http://www.ip3366.net/free/?stype=1&page=7
+2020-11-22 11:34:32.078 | INFO     | base:crawl:30 - fetched proxy 27.220.123.109:9000 from http://www.ip3366.net/free/?stype=1&page=7
+2020-11-22 11:34:32.078 | INFO     | processors.getter:run:39 - IP3366Crawler:27.220.123.109:9000 already added
+2020-11-22 11:34:32.078 | INFO     | base:crawl:30 - fetched proxy 49.70.99.129:9999 from http://www.ip3366.net/free/?stype=1&page=7
+2020-11-22 11:34:32.078 | INFO     | processors.getter:run:39 - IP3366Crawler:49.70.99.129:9999 already added
+2020-11-22 11:34:32.078 | INFO     | base:crawl:30 - fetched proxy 223.243.175.185:9999 from http://www.ip3366.net/free/?stype=1&page=7
+2020-11-22 11:34:32.078 | INFO     | processors.getter:run:39 - IP3366Crawler:223.243.175.185:9999 already added
+2020-11-22 11:34:32.078 | INFO     | base:crawl:30 - fetched proxy 27.220.127.101:9000 from http://www.ip3366.net/free/?stype=1&page=7
+2020-11-22 11:34:32.078 | INFO     | processors.getter:run:39 - IP3366Crawler:27.220.127.101:9000 already added
+2020-11-22 11:34:32.078 | INFO     | base:crawl:30 - fetched proxy 27.220.125.208:9000 from http://www.ip3366.net/free/?stype=1&page=7
+2020-11-22 11:34:32.078 | INFO     | processors.getter:run:39 - IP3366Crawler:27.220.125.208:9000 already added
+2020-11-22 11:34:32.078 | INFO     | base:crawl:30 - fetched proxy 27.220.54.0:9000 from http://www.ip3366.net/free/?stype=1&page=7
+2020-11-22 11:34:32.078 | INFO     | processors.getter:run:39 - IP3366Crawler:27.220.54.0:9000 already added
+2020-11-22 11:34:32.078 | INFO     | base:crawl:30 - fetched proxy 42.238.89.201:9999 from http://www.ip3366.net/free/?stype=1&page=7
+2020-11-22 11:34:32.078 | INFO     | processors.getter:run:39 - IP3366Crawler:42.238.89.201:9999 already added
+2020-11-22 11:34:32.078 | INFO     | base:crawl:30 - fetched proxy 49.89.143.190:9999 from http://www.ip3366.net/free/?stype=1&page=7
+2020-11-22 11:34:32.078 | INFO     | processors.getter:run:39 - IP3366Crawler:49.89.143.190:9999 already added
+2020-11-22 11:34:32.078 | INFO     | base:crawl:30 - fetched proxy 59.62.27.35:9000 from http://www.ip3366.net/free/?stype=1&page=7
+2020-11-22 11:34:32.078 | INFO     | processors.getter:run:39 - IP3366Crawler:59.62.27.35:9000 already added
+2020-11-22 11:34:32.078 | INFO     | base:crawl:30 - fetched proxy 49.87.10.106:9999 from http://www.ip3366.net/free/?stype=1&page=7
+2020-11-22 11:34:32.078 | INFO     | processors.getter:run:39 - IP3366Crawler:49.87.10.106:9999 already added
+2020-11-22 11:34:32.078 | INFO     | processors.getter:run:36 - crawler KuaidailiCrawler to get proxy
+2020-11-22 11:34:32.078 | INFO     | base:crawl:27 - fetching https://www.kuaidaili.com/free/inha/1/
+2020-11-22 11:34:32.406 | INFO     | base:crawl:30 - fetched proxy 123.163.121.19:9999 from https://www.kuaidaili.com/free/inha/1/
+2020-11-22 11:34:32.406 | INFO     | processors.getter:run:39 - KuaidailiCrawler:123.163.121.19:9999 already added
+2020-11-22 11:34:32.406 | INFO     | base:crawl:30 - fetched proxy 117.69.12.132:9999 from https://www.kuaidaili.com/free/inha/1/
+2020-11-22 11:34:32.406 | INFO     | processors.getter:run:39 - KuaidailiCrawler:117.69.12.132:9999 already added
+2020-11-22 11:34:32.406 | INFO     | base:crawl:30 - fetched proxy 1.198.72.188:9999 from https://www.kuaidaili.com/free/inha/1/
+2020-11-22 11:34:32.406 | INFO     | processors.getter:run:39 - KuaidailiCrawler:1.198.72.188:9999 already added
+2020-11-22 11:34:32.406 | INFO     | base:crawl:30 - fetched proxy 113.124.92.87:9999 from https://www.kuaidaili.com/free/inha/1/
+2020-11-22 11:34:32.406 | INFO     | processors.getter:run:39 - KuaidailiCrawler:113.124.92.87:9999 already added
+2020-11-22 11:34:32.406 | INFO     | base:crawl:30 - fetched proxy 175.42.68.145:9999 from https://www.kuaidaili.com/free/inha/1/
+2020-11-22 11:34:32.406 | INFO     | processors.getter:run:39 - KuaidailiCrawler:175.42.68.145:9999 already added
+2020-11-22 11:34:32.422 | INFO     | base:crawl:30 - fetched proxy 60.167.21.211:1133 from https://www.kuaidaili.com/free/inha/1/
+2020-11-22 11:34:32.422 | INFO     | processors.getter:run:39 - KuaidailiCrawler:60.167.21.211:1133 already added
+2020-11-22 11:34:32.422 | INFO     | base:crawl:30 - fetched proxy 115.29.170.58:8118 from https://www.kuaidaili.com/free/inha/1/
+2020-11-22 11:34:32.422 | INFO     | processors.getter:run:39 - KuaidailiCrawler:115.29.170.58:8118 already added
+2020-11-22 11:34:32.422 | INFO     | base:crawl:30 - fetched proxy 114.99.8.63:3000 from https://www.kuaidaili.com/free/inha/1/
+2020-11-22 11:34:32.422 | INFO     | processors.getter:run:39 - KuaidailiCrawler:114.99.8.63:3000 already added
+2020-11-22 11:34:32.422 | INFO     | base:crawl:30 - fetched proxy 27.205.40.116:9000 from https://www.kuaidaili.com/free/inha/1/
+2020-11-22 11:34:32.422 | INFO     | processors.getter:run:39 - KuaidailiCrawler:27.205.40.116:9000 already added
+2020-11-22 11:34:32.422 | INFO     | base:crawl:30 - fetched proxy 175.43.58.20:9999 from https://www.kuaidaili.com/free/inha/1/
+2020-11-22 11:34:32.422 | INFO     | processors.getter:run:39 - KuaidailiCrawler:175.43.58.20:9999 already added
+2020-11-22 11:34:32.422 | INFO     | base:crawl:30 - fetched proxy 182.34.36.224:9999 from https://www.kuaidaili.com/free/inha/1/
+2020-11-22 11:34:32.422 | INFO     | processors.getter:run:39 - KuaidailiCrawler:182.34.36.224:9999 already added
+2020-11-22 11:34:32.422 | INFO     | base:crawl:30 - fetched proxy 175.42.158.226:9999 from https://www.kuaidaili.com/free/inha/1/
+2020-11-22 11:34:32.422 | INFO     | processors.getter:run:39 - KuaidailiCrawler:175.42.158.226:9999 already added
+2020-11-22 11:34:32.422 | INFO     | base:crawl:30 - fetched proxy 1.197.203.99:9999 from https://www.kuaidaili.com/free/inha/1/
+2020-11-22 11:34:32.422 | INFO     | processors.getter:run:39 - KuaidailiCrawler:1.197.203.99:9999 already added
+2020-11-22 11:34:32.422 | INFO     | base:crawl:30 - fetched proxy 175.42.122.53:9999 from https://www.kuaidaili.com/free/inha/1/
+2020-11-22 11:34:32.422 | INFO     | processors.getter:run:39 - KuaidailiCrawler:175.42.122.53:9999 already added
+2020-11-22 11:34:32.422 | INFO     | base:crawl:30 - fetched proxy 171.12.115.27:9999 from https://www.kuaidaili.com/free/inha/1/
+2020-11-22 11:34:32.422 | INFO     | processors.getter:run:39 - KuaidailiCrawler:171.12.115.27:9999 already added
+2020-11-22 11:34:32.422 | INFO     | base:crawl:27 - fetching https://www.kuaidaili.com/free/inha/2/
+2020-11-22 11:34:35.089 | INFO     | base:crawl:30 - fetched proxy 123.149.137.212:9999 from https://www.kuaidaili.com/free/inha/2/
+2020-11-22 11:34:35.089 | INFO     | processors.getter:run:39 - KuaidailiCrawler:123.149.137.212:9999 already added
+2020-11-22 11:34:35.089 | INFO     | base:crawl:30 - fetched proxy 123.55.98.171:9999 from https://www.kuaidaili.com/free/inha/2/
+2020-11-22 11:34:35.089 | INFO     | processors.getter:run:39 - KuaidailiCrawler:123.55.98.171:9999 already added
+2020-11-22 11:34:35.089 | INFO     | base:crawl:30 - fetched proxy 175.44.108.197:9999 from https://www.kuaidaili.com/free/inha/2/
+2020-11-22 11:34:35.089 | INFO     | processors.getter:run:39 - KuaidailiCrawler:175.44.108.197:9999 already added
+2020-11-22 11:34:35.089 | INFO     | base:crawl:30 - fetched proxy 115.221.245.228:9999 from https://www.kuaidaili.com/free/inha/2/
+2020-11-22 11:34:35.089 | INFO     | processors.getter:run:39 - KuaidailiCrawler:115.221.245.228:9999 already added
+2020-11-22 11:34:35.089 | INFO     | base:crawl:30 - fetched proxy 1.198.72.87:9999 from https://www.kuaidaili.com/free/inha/2/
+2020-11-22 11:34:35.089 | INFO     | processors.getter:run:39 - KuaidailiCrawler:1.198.72.87:9999 already added
+2020-11-22 11:34:35.089 | INFO     | base:crawl:30 - fetched proxy 175.42.68.73:9999 from https://www.kuaidaili.com/free/inha/2/
+2020-11-22 11:34:35.089 | INFO     | processors.getter:run:39 - KuaidailiCrawler:175.42.68.73:9999 already added
+2020-11-22 11:34:35.089 | INFO     | base:crawl:30 - fetched proxy 171.11.28.97:9999 from https://www.kuaidaili.com/free/inha/2/
+2020-11-22 11:34:35.089 | INFO     | processors.getter:run:39 - KuaidailiCrawler:171.11.28.97:9999 already added
+2020-11-22 11:34:35.105 | INFO     | base:crawl:30 - fetched proxy 58.22.177.69:9999 from https://www.kuaidaili.com/free/inha/2/
+2020-11-22 11:34:35.105 | INFO     | processors.getter:run:39 - KuaidailiCrawler:58.22.177.69:9999 already added
+2020-11-22 11:34:35.105 | INFO     | base:crawl:30 - fetched proxy 183.166.96.14:9999 from https://www.kuaidaili.com/free/inha/2/
+2020-11-22 11:34:35.105 | INFO     | processors.getter:run:39 - KuaidailiCrawler:183.166.96.14:9999 already added
+2020-11-22 11:34:35.105 | INFO     | base:crawl:30 - fetched proxy 1.196.177.213:9999 from https://www.kuaidaili.com/free/inha/2/
+2020-11-22 11:34:35.105 | INFO     | processors.getter:run:39 - KuaidailiCrawler:1.196.177.213:9999 already added
+2020-11-22 11:34:35.105 | INFO     | base:crawl:30 - fetched proxy 123.55.114.77:9999 from https://www.kuaidaili.com/free/inha/2/
+2020-11-22 11:34:35.105 | INFO     | processors.getter:run:39 - KuaidailiCrawler:123.55.114.77:9999 already added
+2020-11-22 11:34:35.105 | INFO     | base:crawl:30 - fetched proxy 36.248.133.117:9999 from https://www.kuaidaili.com/free/inha/2/
+2020-11-22 11:34:35.105 | INFO     | processors.getter:run:39 - KuaidailiCrawler:36.248.133.117:9999 already added
+2020-11-22 11:34:35.105 | INFO     | base:crawl:30 - fetched proxy 123.163.117.62:9999 from https://www.kuaidaili.com/free/inha/2/
+2020-11-22 11:34:35.105 | INFO     | processors.getter:run:39 - KuaidailiCrawler:123.163.117.62:9999 already added
+2020-11-22 11:34:35.105 | INFO     | base:crawl:30 - fetched proxy 1.197.204.52:9999 from https://www.kuaidaili.com/free/inha/2/
+2020-11-22 11:34:35.105 | INFO     | processors.getter:run:39 - KuaidailiCrawler:1.197.204.52:9999 already added
+2020-11-22 11:34:35.105 | INFO     | base:crawl:30 - fetched proxy 175.155.140.34:1133 from https://www.kuaidaili.com/free/inha/2/
+2020-11-22 11:34:35.105 | INFO     | processors.getter:run:39 - KuaidailiCrawler:175.155.140.34:1133 already added
+2020-11-22 11:34:35.105 | INFO     | base:crawl:27 - fetching https://www.kuaidaili.com/free/inha/3/
+2020-11-22 11:34:37.763 | INFO     | base:crawl:30 - fetched proxy 115.218.5.120:9000 from https://www.kuaidaili.com/free/inha/3/
+2020-11-22 11:34:37.778 | INFO     | processors.getter:run:39 - KuaidailiCrawler:115.218.5.120:9000 already added
+2020-11-22 11:34:37.778 | INFO     | base:crawl:30 - fetched proxy 182.87.38.156:9000 from https://www.kuaidaili.com/free/inha/3/
+2020-11-22 11:34:37.778 | INFO     | processors.getter:run:39 - KuaidailiCrawler:182.87.38.156:9000 already added
+2020-11-22 11:34:37.778 | INFO     | base:crawl:30 - fetched proxy 60.168.207.253:1133 from https://www.kuaidaili.com/free/inha/3/
+2020-11-22 11:34:37.778 | INFO     | processors.getter:run:39 - KuaidailiCrawler:60.168.207.253:1133 already added
+2020-11-22 11:34:37.778 | INFO     | base:crawl:30 - fetched proxy 114.99.13.141:1133 from https://www.kuaidaili.com/free/inha/3/
+2020-11-22 11:34:37.778 | INFO     | processors.getter:run:39 - KuaidailiCrawler:114.99.13.141:1133 already added
+2020-11-22 11:34:37.778 | INFO     | base:crawl:30 - fetched proxy 119.108.172.169:9000 from https://www.kuaidaili.com/free/inha/3/
+2020-11-22 11:34:37.778 | INFO     | processors.getter:run:39 - KuaidailiCrawler:119.108.172.169:9000 already added
+2020-11-22 11:34:37.778 | INFO     | base:crawl:30 - fetched proxy 36.248.133.81:9999 from https://www.kuaidaili.com/free/inha/3/
+2020-11-22 11:34:37.778 | INFO     | processors.getter:run:39 - KuaidailiCrawler:36.248.133.81:9999 already added
+2020-11-22 11:34:37.778 | INFO     | base:crawl:30 - fetched proxy 114.239.29.206:9999 from https://www.kuaidaili.com/free/inha/3/
+2020-11-22 11:34:37.778 | INFO     | processors.getter:run:39 - KuaidailiCrawler:114.239.29.206:9999 already added
+2020-11-22 11:34:37.778 | INFO     | base:crawl:30 - fetched proxy 1.196.177.81:9999 from https://www.kuaidaili.com/free/inha/3/
+2020-11-22 11:34:37.778 | INFO     | processors.getter:run:39 - KuaidailiCrawler:1.196.177.81:9999 already added
+2020-11-22 11:34:37.778 | INFO     | base:crawl:30 - fetched proxy 175.44.109.13:9999 from https://www.kuaidaili.com/free/inha/3/
+2020-11-22 11:34:37.778 | INFO     | processors.getter:run:39 - KuaidailiCrawler:175.44.109.13:9999 already added
+2020-11-22 11:34:37.778 | INFO     | base:crawl:30 - fetched proxy 113.124.86.220:9999 from https://www.kuaidaili.com/free/inha/3/
+2020-11-22 11:34:37.778 | INFO     | processors.getter:run:39 - KuaidailiCrawler:113.124.86.220:9999 already added
+2020-11-22 11:34:37.778 | INFO     | base:crawl:30 - fetched proxy 175.42.68.174:9999 from https://www.kuaidaili.com/free/inha/3/
+2020-11-22 11:34:37.778 | INFO     | processors.getter:run:39 - KuaidailiCrawler:175.42.68.174:9999 already added
+2020-11-22 11:34:37.778 | INFO     | base:crawl:30 - fetched proxy 182.34.34.20:9999 from https://www.kuaidaili.com/free/inha/3/
+2020-11-22 11:34:37.778 | INFO     | processors.getter:run:39 - KuaidailiCrawler:182.34.34.20:9999 already added
+2020-11-22 11:34:37.778 | INFO     | base:crawl:30 - fetched proxy 113.194.140.60:9999 from https://www.kuaidaili.com/free/inha/3/
+2020-11-22 11:34:37.794 | INFO     | processors.getter:run:39 - KuaidailiCrawler:113.194.140.60:9999 already added
+2020-11-22 11:34:37.794 | INFO     | base:crawl:30 - fetched proxy 113.194.48.139:9999 from https://www.kuaidaili.com/free/inha/3/
+2020-11-22 11:34:37.794 | INFO     | processors.getter:run:39 - KuaidailiCrawler:113.194.48.139:9999 already added
+2020-11-22 11:34:37.794 | INFO     | base:crawl:30 - fetched proxy 123.55.114.42:9999 from https://www.kuaidaili.com/free/inha/3/
+2020-11-22 11:34:37.794 | INFO     | processors.getter:run:39 - KuaidailiCrawler:123.55.114.42:9999 already added
+2020-11-22 11:34:37.794 | INFO     | base:crawl:27 - fetching https://www.kuaidaili.com/free/inha/4/
